@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_news"
+        android:icon="@drawable/nav_circle"
+        android:title="首页" />
+    <item
+        android:id="@+id/item_finding"
+        android:icon="@drawable/nav_friends"
+        android:title="发现" />
+    <item
+        android:id="@+id/item_plus"
+        android:icon="@drawable/nav_play"
+        android:title="添加"
+        />
+</menu>

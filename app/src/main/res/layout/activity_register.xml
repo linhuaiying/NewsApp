@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".View.UserView.RegisterActivity"
+    android:orientation="vertical"
+    android:background="@drawable/login">
+
+    <EditText
+        android:id="@+id/login_input_phone_et"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:ems="10"
+        android:hint="请输入手机号"
+        android:inputType="phone"
+        android:textColor="#fff"/>
+
+
+
+    <EditText
+        android:id="@+id/login_input_code_et"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_input_phone_et"
+        android:layout_below="@+id/login_input_phone_et"
+        android:layout_marginTop="44dp"
+        android:hint="请输入验证码"
+        android:inputType="textPassword"
+        android:textColor="#fff">
+    </EditText>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_alignRight="@+id/login_input_phone_et"
+        android:layout_alignTop="@+id/login_input_code_et">
+        <Button
+            android:id="@+id/login_request_code_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:background="#A919A6E6"
+            android:stateListAnimator="@null"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <EditText
+        android:id="@+id/login_input_password_et"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_input_code_et"
+        android:layout_below="@+id/login_input_code_et"
+        android:layout_marginTop="44dp"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:textColor="#fff">
+    </EditText>
+
+    <EditText
+        android:id="@+id/login_input_repassword_et"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_input_password_et"
+        android:layout_below="@+id/login_input_password_et"
+        android:layout_marginTop="44dp"
+        android:hint="确认密码"
+        android:inputType="textPassword"
+        android:textColor="#fff">
+    </EditText>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_input_repassword_et"
+        android:layout_below="@+id/login_input_repassword_et"
+        android:layout_marginTop="44dp"
+        app:cardCornerRadius="10dp">
+
+        <Button
+            android:id="@+id/login_commit_btn"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="注册"
+            android:textColor="#fff"
+            android:background="@color/colorPrimary"
+            android:stateListAnimator="@null"/>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
