@@ -1,6 +1,6 @@
 package com.example.newsapp.Model.UserModels;
 
-import com.example.newsapp.Service.LoginService;
+import com.example.newsapp.Service.UserService;
 import com.example.newsapp.bean.Userbean.User;
 import com.example.newsapp.bean.Userbean.UserResponse;
 
@@ -31,8 +31,8 @@ public class UserModel {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://www.wanandroid.com/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加json转换器build();
                 .build();
-        LoginService loginService = retrofit.create(LoginService.class); //Retrofit将这个接口进行实现
-        Call<UserResponse> call = loginService.post(username, password);
+        UserService loginService = retrofit.create(UserService.class); //Retrofit将这个接口进行实现
+        Call<UserResponse> call = loginService.login(username, password);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

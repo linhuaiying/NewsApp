@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.newsapp.Application.MyApplication;
 import com.example.newsapp.R;
+import com.example.newsapp.View.Activity.NewsContent2Activity;
 import com.example.newsapp.View.Activity.NewsContentActivity;
 import com.example.newsapp.bean.Newsbean.News;
 
@@ -33,8 +34,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             @Override
             public void onClick(View view) {
                 int position = newsViewHolder.getAdapterPosition();
-                String url = newsList.get(position).getUrl();
-                NewsContentActivity.Companion.actionStart(parent.getContext(), url); //显示新闻内容，可以改成去获取后台新闻数据，就没有广告了
+               // String url = newsList.get(position).getUrl();
+              //  NewsContentActivity.Companion.actionStart(parent.getContext(), url); //显示新闻内容，可以改成去获取后台新闻数据，就没有广告了
+               String uniquekey = newsList.get(position).getUniquekey();
+               NewsContent2Activity.actionStart(parent.getContext(), uniquekey);
             }
         });
         return newsViewHolder;

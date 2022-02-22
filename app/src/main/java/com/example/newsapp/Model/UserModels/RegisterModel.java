@@ -1,6 +1,6 @@
 package com.example.newsapp.Model.UserModels;
 
-import com.example.newsapp.Service.RegisterService;
+import com.example.newsapp.Service.UserService;
 import com.example.newsapp.bean.Userbean.User;
 import com.example.newsapp.bean.Userbean.UserResponse;
 
@@ -30,8 +30,8 @@ public class RegisterModel {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://www.wanandroid.com/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
-        RegisterService registerService = retrofit.create(RegisterService.class); //Retrofit将这个接口进行实现
-        Call<UserResponse> call = registerService.post(username, password, repassword);
+        UserService registerService = retrofit.create(UserService.class); //Retrofit将这个接口进行实现
+        Call<UserResponse> call = registerService.register(username, password, repassword);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

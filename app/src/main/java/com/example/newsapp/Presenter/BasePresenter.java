@@ -60,4 +60,8 @@ public class BasePresenter<T extends IBaseView> implements LifecycleObserver { /
 
     public void fetch(String username, String password) throws InterruptedException {
    }
+
+    public void fetch(String uniquekey) throws InterruptedException {
+
+    }
 }
