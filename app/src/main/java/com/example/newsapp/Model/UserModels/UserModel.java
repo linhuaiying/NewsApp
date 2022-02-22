@@ -29,7 +29,7 @@ public class UserModel {
     public User getData() throws InterruptedException {
         final User[] user = new User[1];
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://www.wanandroid.com/")
-                .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
+                .addConverterFactory(GsonConverterFactory.create()) //添加json转换器build();
                 .build();
         LoginService loginService = retrofit.create(LoginService.class); //Retrofit将这个接口进行实现
         Call<UserResponse> call = loginService.post(username, password);
@@ -38,7 +38,7 @@ public class UserModel {
             public void run() {
                 try {
                     Response<UserResponse> response = call.execute();
-                    UserResponse userResponse =  response.body();
+                    UserResponse userResponse =  response.body(); //json自动转化成实体类
                     user[0] = userResponse.getData(); //服务器返回的用户信息
                     msg = userResponse.getErrorMsg(); //服务器返回的错误信息
                 } catch (IOException e) {
@@ -48,7 +48,7 @@ public class UserModel {
         };
         Thread thread = new Thread(runnable);
         thread.start();
-        thread.join();
+        thread.join(); //等待子线程返回信息再return
         return user[0];
     }
 }

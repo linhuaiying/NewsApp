@@ -1,4 +1,4 @@
-package com.example.newsapp.Presenter.RegisterPresenter;
+package com.example.newsapp.Presenter.UserPresenter;
 
 import com.example.newsapp.Model.UserModels.UserModel;
 import com.example.newsapp.Presenter.BasePresenter;
@@ -18,7 +18,7 @@ public class LoginPresenter<T extends IUserView> extends BasePresenter {
 
                 @Override
                 public void onComplete(User user) {
-                    ((IUserView)iView.get()).getUser(user); //给view传递用户信息
+                    ((IUserView)iView.get()).getUser(user); //从model层获取数据，给view传递用户信息
                 }
 
                 @Override

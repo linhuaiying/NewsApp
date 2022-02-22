@@ -37,7 +37,7 @@ public abstract class NewsModel {
                 try {
                     Response<NewsResponse> response = call.execute();
                     NewsResponse baseResponse = response.body();
-                    newsList[0] = baseResponse.getResult().getData();
+                    newsList[0] = baseResponse.getResult().getData(); //newsList[0]是一个数组
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

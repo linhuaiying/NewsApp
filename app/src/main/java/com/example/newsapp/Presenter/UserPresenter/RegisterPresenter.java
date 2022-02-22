@@ -1,4 +1,4 @@
-package com.example.newsapp.Presenter.RegisterPresenter;
+package com.example.newsapp.Presenter.UserPresenter;
 
 import com.example.newsapp.Model.UserModels.RegisterModel;
 import com.example.newsapp.Presenter.BasePresenter;

@@ -14,7 +14,7 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         super.onCreate(savedInstanceState);
         //定义一个选择表示层的功能
         presenter = createPresenter();
-        presenter.attachView((V)this);
+        presenter.attachView((V)this); //让presenter绑定自己
         registerSDK();
     }
 
@@ -26,7 +26,7 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
 
     }
 
-    protected abstract T createPresenter();
+    protected abstract T createPresenter(); //绑定presenter
 
     @Override
     public void onDestroy() {

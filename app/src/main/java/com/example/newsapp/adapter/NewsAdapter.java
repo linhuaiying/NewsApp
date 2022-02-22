@@ -34,7 +34,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             public void onClick(View view) {
                 int position = newsViewHolder.getAdapterPosition();
                 String url = newsList.get(position).getUrl();
-                NewsContentActivity.Companion.actionStart(parent.getContext(), url);
+                NewsContentActivity.Companion.actionStart(parent.getContext(), url); //显示新闻内容，可以改成去获取后台新闻数据，就没有广告了
             }
         });
         return newsViewHolder;

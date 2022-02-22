@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.newsapp.Presenter.RegisterPresenter.RegisterPresenter;
+import com.example.newsapp.Presenter.UserPresenter.RegisterPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
 import com.example.newsapp.View.IBaseView;
@@ -276,6 +276,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, IUserView>
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
     }
+
 
 }
 

@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.newsapp.Presenter.RegisterPresenter.LoginPresenter;
+import com.example.newsapp.Presenter.UserPresenter.LoginPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
 import com.example.newsapp.View.Activity.MainActivity;
@@ -59,8 +59,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
     @Override
     protected LoginPresenter createPresenter() {
         return new LoginPresenter();
-    }
+    } //与LoginPresenter绑定
 
+    //打开自己这个Activity
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
@@ -82,7 +83,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
             }
         }
         if(view.getId() == R.id.register) {
-            RegisterActivity.actionStart(this);
+            RegisterActivity.actionStart(this); //打开注册面板
             this.finish();
         }
     }
@@ -129,9 +130,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
         if (TextUtils.isEmpty(mobileNums))
             return false;
         else
-            return mobileNums.matches(telRegex);
+            return mobileNums.matches(telRegex); //正则
     }
 
+    //登录进度条
     private void createProgressBar() {
         FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
@@ -143,11 +145,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
         layout.addView(mProBar);
     }
 
+    //回调显示错误信息
     @Override
     public void showErrorMessage(String msg) {
         if(!msg.equals("")) MyToast.toast(msg);
     }
 
+    //回调接收后台返回的结果
     @Override
     public void getUser(User user) {
 

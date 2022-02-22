@@ -9,8 +9,8 @@ import com.example.newsapp.View.IBaseView;
 
 import java.lang.ref.WeakReference;
 
-public class BasePresenter<T extends IBaseView> implements LifecycleObserver {
-    //1.持有View接口
+public class BasePresenter<T extends IBaseView> implements LifecycleObserver { //生命周期观察者
+    //1.持有View接口的弱引用
    protected WeakReference<T> iView;
     //绑定
     public void attachView(T view) {
