@@ -1,27 +1,25 @@
-package com.example.newsapp.View.Activity;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.newsapp.View.NewsContentView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.newsapp.Presenter.NewsContentPresenter.NewsContentPresenter;
 import com.example.newsapp.R;
-import com.example.newsapp.View.UserView.BaseActivity;
-import com.example.newsapp.bean.Userbean.User;
+import com.example.newsapp.View.BaseActivity;
 
-public class NewsContent2Activity extends BaseActivity<NewsContentPresenter, INewsContentView> implements INewsContentView{
+public class NewsContentActivity extends BaseActivity<NewsContentPresenter, INewsContentView> implements INewsContentView{
 
-    TextView textView;
+    WebView webView;
     String uniquekey;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_content2);
-        textView = findViewById(R.id.newscontent);
-        uniquekey = getIntent().getStringExtra("uniquekey");
+        setContentView(R.layout.activity_news_content);
+        init();
         try {
             presenter.fetch(uniquekey);
         } catch (InterruptedException e) {
@@ -30,19 +28,28 @@ public class NewsContent2Activity extends BaseActivity<NewsContentPresenter, INe
     }
 
     @Override
+    public void init() {
+        webView = findViewById(R.id.newscontent);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setTextSize(WebSettings.TextSize.LARGER);
+        webView.setWebViewClient(new WebViewClient());
+        uniquekey = getIntent().getStringExtra("uniquekey");
+    }
+
+    @Override
     protected NewsContentPresenter createPresenter() {
         return new NewsContentPresenter();
     }
 
     public static void actionStart(Context context, String uniquekey) {
-        Intent intent = new Intent(context, NewsContent2Activity.class);
+        Intent intent = new Intent(context, NewsContentActivity.class);
         intent.putExtra("uniquekey", uniquekey);
         context.startActivity(intent);
     }
 
     @Override
     public void showNewsContentView(String data) {
-        textView.setText(data);
+       webView.loadDataWithBaseURL(null, data, "text/html" , "utf-8", null);
     }
 
     @Override

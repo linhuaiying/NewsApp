@@ -1,4 +1,4 @@
-package com.example.newsapp.View.Activity;
+package com.example.newsapp.View.NewsContentView;
 
 
 import com.example.newsapp.View.IBaseView;

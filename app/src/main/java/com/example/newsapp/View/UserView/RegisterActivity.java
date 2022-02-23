@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.newsapp.Presenter.UserPresenter.RegisterPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
+import com.example.newsapp.View.BaseActivity;
 import com.example.newsapp.View.IBaseView;
 import com.mob.MobSDK;
 
@@ -173,7 +174,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, IUserView>
             MyToast.toast("两次输入密码不一致");
         }
         else {
-            presenter.fetch(phone, password, repassword); //明天把这个注释掉！
+          //  presenter.fetch(phone, password, repassword);
             //将收到的验证码和手机号提交再次核对
             SMSSDK.submitVerificationCode("86", phone, inputCodeEt
                     .getText().toString()); //执行eventhandler回调

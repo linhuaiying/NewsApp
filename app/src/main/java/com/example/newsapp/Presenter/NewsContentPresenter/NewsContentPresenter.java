@@ -2,7 +2,7 @@ package com.example.newsapp.Presenter.NewsContentPresenter;
 
 import com.example.newsapp.Model.NewsContentModels.NewsContentModel;
 import com.example.newsapp.Presenter.BasePresenter;
-import com.example.newsapp.View.Activity.INewsContentView;
+import com.example.newsapp.View.NewsContentView.INewsContentView;
 
 
 public class NewsContentPresenter<T extends INewsContentView> extends BasePresenter {

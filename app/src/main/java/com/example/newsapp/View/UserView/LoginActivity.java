@@ -17,6 +17,7 @@ import com.example.newsapp.Presenter.UserPresenter.LoginPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
 import com.example.newsapp.View.Activity.MainActivity;
+import com.example.newsapp.View.BaseActivity;
 import com.example.newsapp.bean.Userbean.User;
 
 

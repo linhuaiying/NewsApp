@@ -1,4 +1,4 @@
-package com.example.newsapp.View.UserView;
+package com.example.newsapp.View;
 
 import android.os.Bundle;
 

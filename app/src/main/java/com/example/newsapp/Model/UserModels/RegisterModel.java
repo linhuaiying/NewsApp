@@ -1,11 +1,14 @@
 package com.example.newsapp.Model.UserModels;
 
+import android.util.Log;
+
 import com.example.newsapp.Service.UserService;
 import com.example.newsapp.bean.Userbean.User;
 import com.example.newsapp.bean.Userbean.UserResponse;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -39,7 +42,11 @@ public class RegisterModel {
                     Response<UserResponse> response = call.execute();
                     UserResponse userResponse =  response.body();
                     msg = userResponse.getErrorMsg(); //服务器返回的错误信息
-                } catch (IOException e) {
+                    if(msg.equals("")) {
+                        //将用户信息保存到自己写的后端
+                        saveData();
+                    }
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -48,5 +55,25 @@ public class RegisterModel {
         thread.start();
         thread.join();
         return msg;
+    }
+    public void saveData() throws InterruptedException {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/")
+                .build();
+        UserService registerService = retrofit.create(UserService.class); //Retrofit将这个接口进行实现
+        Call<ResponseBody> call = registerService.saveUser(username, password);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response<ResponseBody> response = call.execute();
+                    Log.d("RegisterModel", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        thread.join();
     }
 }
