@@ -2,15 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/bar_tool"
-        android:icon="@drawable/tool"
-        android:title="Tool"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/bar_problem"
-        android:icon="@drawable/problem"
-        android:title="Help"
-        app:showAsAction="always"
-        />
+        android:id="@+id/bar_publish"
+        android:icon="@drawable/publish"
+        android:title="Publish"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/publish_article"
+                android:orderInCategory="1"
+                android:title="发布微头条"
+                android:icon="@drawable/publish_article"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/publish_img"
+                android:orderInCategory="2"
+                android:title="图片"
+                android:icon="@drawable/publish_img"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/publish_avd"
+                android:orderInCategory="3"
+                android:title="视频"
+                android:icon="@drawable/publish_avd"
+                app:showAsAction="never"
+                />
+        </menu>
+    </item>
 </menu>

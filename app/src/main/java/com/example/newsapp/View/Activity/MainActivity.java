@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.example.newsapp.R;
 import com.example.newsapp.View.NewsView.Fragment2;
 import com.example.newsapp.View.NewsView.Fragment3;
 import com.example.newsapp.View.NewsView.NewsFragment;
+import com.example.newsapp.View.PublishView.PublishActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
 import com.example.newsapp.bean.Userbean.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
+            case R.id.publish_article:
+                PublishActivity.actionStart(this);
             default:
         }
         return true;
