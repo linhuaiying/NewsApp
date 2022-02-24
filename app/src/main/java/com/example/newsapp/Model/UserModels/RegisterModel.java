@@ -57,7 +57,7 @@ public class RegisterModel {
         return msg;
     }
     public void saveData() throws InterruptedException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.24.72.70:8080/") //ipv4地址
                 .build();
         UserService registerService = retrofit.create(UserService.class); //Retrofit将这个接口进行实现
         Call<ResponseBody> call = registerService.saveUser(username, password);
