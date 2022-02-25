@@ -18,14 +18,13 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.bumptech.glide.Glide;
-import com.example.newsapp.Application.MyApplication;
 import com.example.newsapp.R;
 
 import java.util.concurrent.ExecutionException;
@@ -63,9 +62,9 @@ public class PublishActivity extends AppCompatActivity {
         boolean isKitKatO = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         Intent getAlbum;
         if (isKitKatO) {
-            getAlbum = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            getAlbum = new Intent(Intent.ACTION_PICK);
         } else {
-            getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+            getAlbum = new Intent(Intent.ACTION_PICK);
         }
         getAlbum.setType("image/*");
 
@@ -114,14 +113,17 @@ public class PublishActivity extends AppCompatActivity {
                 int index = et.getSelectionStart();
                 // 获取光标所在位置
                 Editable edit_text = et.getEditableText();
-                if (index < 0 || index >= edit_text.length()) {
-                    edit_text.append(spannableString);
-                    edit_text.insert(index + spannableString.length(), "\n");
-                } else {
+                if(index > 0 && edit_text.charAt(index - 1) == '\n'){ //位于除第一行以外的行首
                     edit_text.insert(index, spannableString);
                     edit_text.insert(index + spannableString.length(), "\n");
+                } else if (index > 0) { //位于行中
+                    edit_text.append("\n");
+                    edit_text.append(spannableString);
+                    edit_text.append("\n");
+                } else { //位于第一行
+                    edit_text.append(spannableString);
+                    edit_text.append("\n");
                 }
-                // et.setSelection(et.length());
                 ll.clearFocus();
                 ll.setFocusable(true);
                 ll.setFocusableInTouchMode(true);

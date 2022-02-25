@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView phoneText = headerView.findViewById(R.id.username);
-        phoneText.setText(user.getNickname());
+        phoneText.setText(user.getUsername());
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

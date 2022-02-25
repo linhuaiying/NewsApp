@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.Presenter.UserPresenter.LoginPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
@@ -20,11 +21,14 @@ import com.example.newsapp.View.Activity.MainActivity;
 import com.example.newsapp.View.BaseActivity;
 import com.example.newsapp.bean.Userbean.User;
 
+import java.util.Map;
+
 
 public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> implements View.OnClickListener, IUserView {
 
     String phone;
     String password;
+    Map<String,String> userInfo;
 
     // 手机号输入框
     private EditText inputPhoneEt;
@@ -44,7 +48,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(isLogined()) {
+            User user = new User();
+            user.setUsername(phone);
+            user.setPassword(password);
+            MainActivity.actionStart(this, user);
+            this.finish();
+        }
         init();
+    }
+
+    public boolean isLogined() {
+        userInfo= SaveAccount.getUserInfo(this);
+        phone = userInfo.get("userName");
+        password = userInfo.get("password");
+        if(phone != null && password != null) {
+           return true;
+        }
+        return false;
     }
 
     @Override
@@ -157,6 +178,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
     public void getUser(User user) {
 
         if(user != null) {    //跳转到主页
+            //保存用户信息到本地
+            SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
             createProgressBar();
             MainActivity.actionStart(this, user);
             this.finish();
