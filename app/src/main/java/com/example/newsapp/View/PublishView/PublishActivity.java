@@ -1,7 +1,6 @@
 package com.example.newsapp.View.PublishView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -18,16 +17,14 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.newsapp.R;
-
-import java.util.concurrent.ExecutionException;
 
 
 public class PublishActivity extends AppCompatActivity {
@@ -35,7 +32,9 @@ public class PublishActivity extends AppCompatActivity {
     ScrollView scrollView;
     EditText et;
     LinearLayout ll;
-    Button btn1;
+    Button photos;
+    TextView cancel;
+    TextView publish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +43,19 @@ public class PublishActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView);
         et = findViewById(R.id.et);
         ll = findViewById(R.id.ll);
-        btn1 = findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        publish = findViewById(R.id.publish);
+        cancel = findViewById(R.id.cancel);
+        photos = findViewById(R.id.photos);
+        photos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SelectImg();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PublishActivity.this.finish();
             }
         });
     }

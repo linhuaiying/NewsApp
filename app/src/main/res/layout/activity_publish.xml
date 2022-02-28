@@ -7,6 +7,33 @@
     android:orientation="vertical"
     tools:context=".View.PublishView.PublishActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingVertical="10dp"
+        >
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -31,18 +58,69 @@
 
     </ScrollView>
 
-    <LinearLayout
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/GridLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:columnCount="4"
+        android:rowCount="1"
         android:orientation="horizontal"
-        android:id="@+id/floatLayout"
+        android:background="#F5F5F5"
         >
+        <LinearLayout
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/photos"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/photos"
+                />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_gravity="center">
         <Button
-            android:id="@+id/btn1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="插入图片一" />
+            android:id="@+id/expression"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/expression"
+            />
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="4dp">
+        <Button
+            android:id="@+id/test1"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:text="@"
+            android:textSize="21sp"
+            android:background="#F5F5F5"
+            android:textColor="#696969"
+            />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="4dp">
+        <Button
+            android:id="@+id/test2"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:text="#"
+            android:textSize="20sp"
+            android:background="#F5F5F5"
+            android:textColor="#696969"
+            />
+        </LinearLayout>
+    </GridLayout>
 </LinearLayout>
