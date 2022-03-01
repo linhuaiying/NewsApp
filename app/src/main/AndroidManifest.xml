@@ -21,7 +21,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".View.PublishView.PublishActivity"></activity>
         <activity android:name=".View.NewsContentView.NewsContentActivity" />
         <activity android:name=".View.UserView.LoginActivity">

@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -74,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
          */
     }
 
-
-
+    
     @SuppressLint("ClickableViewAccessibility")
     public void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

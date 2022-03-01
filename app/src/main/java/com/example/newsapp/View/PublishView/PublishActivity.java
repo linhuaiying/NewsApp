@@ -1,12 +1,21 @@
 package com.example.newsapp.View.PublishView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +26,8 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,11 +46,23 @@ public class PublishActivity extends AppCompatActivity {
     Button photos;
     TextView cancel;
     TextView publish;
+    //读写权限
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    //请求状态码
+    private static int REQUEST_PERMISSION_CODE = 1;
+    int screenHeight;
+    int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        //2、通过Resources获取
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        screenHeight = dm.heightPixels;
+        screenWidth = dm.widthPixels;
         scrollView = findViewById(R.id.scrollView);
         et = findViewById(R.id.et);
         ll = findViewById(R.id.ll);
@@ -58,6 +81,21 @@ public class PublishActivity extends AppCompatActivity {
                 PublishActivity.this.finish();
             }
         });
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                Log.i("MainActivity", "申请的权限为：" + permissions[i] + ",申请结果：" + grantResults[i]);
+            }
+        }
     }
 
     public static void actionStart(Context context) {
@@ -79,6 +117,7 @@ public class PublishActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -88,10 +127,29 @@ public class PublishActivity extends AppCompatActivity {
         if (requestCode == 0) {
             try {
                 Uri originalUri = data.getData();  //获得图片的uri
+                Cursor cursor = resolver.query(originalUri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+                cursor.moveToFirst();
+                String mSelectPath = cursor.getString(0);
+                ExifInterface exifInterface = new ExifInterface(mSelectPath);
                 //bitmapUri = originalUri;
                 bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                int bitMapHeight = bm.getHeight();
+                int bitMapWidth = bm.getWidth();
+                int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                // 定义矩阵对象
+                Matrix matrix = new Matrix();
+                if (orientation == 6) {
+                    matrix.postRotate(90);
+                } else if (orientation == 3) {
+                    matrix.postRotate(180);
+                } else if (orientation == 8) {
+                    matrix.postRotate(270);
+                }
+                if(bitMapWidth > screenWidth) {
+                    matrix.postScale(screenWidth * 1.0f / bitMapWidth * 1.0f,screenWidth * 1.0f / bitMapWidth * 1.0f);
+                }
                 //显得到bitmap图片
-                bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight());
+                bm = Bitmap.createBitmap(bm, 0, 0, bitMapWidth, bitMapHeight, matrix, true);
                 ImageSpan imageSpan = new ImageSpan(this, bm);
 
                 String tempUrl = "<img src=\"" + "http://travel.shm.com.cn/files/2022-01/17/5253162_ff37a774-764f-4311-91af-5cb906aeb414.jpg" + "\" />";
@@ -137,6 +195,7 @@ public class PublishActivity extends AppCompatActivity {
                 ll.requestFocus();
                 handler.sendEmptyMessage(0);
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
         }
