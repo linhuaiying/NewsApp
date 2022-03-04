@@ -35,10 +35,19 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.newsapp.Presenter.NewsContentPresenter.NewsContentPresenter;
+import com.example.newsapp.Presenter.PublishPresenter.PublishPresenter;
 import com.example.newsapp.R;
+import com.example.newsapp.View.BaseActivity;
+import com.example.newsapp.View.IBaseView;
+import com.example.newsapp.View.NewsContentView.INewsContentView;
+import com.example.newsapp.View.Activity.showPublishContentActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class PublishActivity extends AppCompatActivity {
+public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView> implements IPublishView {
 
     ScrollView scrollView;
     EditText et;
@@ -54,9 +63,10 @@ public class PublishActivity extends AppCompatActivity {
     private static int REQUEST_PERMISSION_CODE = 1;
     int screenHeight;
     int screenWidth;
+    List<String> imagPaths = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         //2、通过Resources获取
@@ -81,11 +91,26 @@ public class PublishActivity extends AppCompatActivity {
                 PublishActivity.this.finish();
             }
         });
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    presenter.fetch(imagPaths);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
             }
         }
+    }
+
+    @Override
+    protected PublishPresenter createPresenter() {
+        return new PublishPresenter();
     }
 
     @Override
@@ -129,7 +154,8 @@ public class PublishActivity extends AppCompatActivity {
                 Uri originalUri = data.getData();  //获得图片的uri
                 Cursor cursor = resolver.query(originalUri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
                 cursor.moveToFirst();
-                String mSelectPath = cursor.getString(0);
+                String mSelectPath = cursor.getString(0); //图片的路径
+                imagPaths.add(mSelectPath);
                 ExifInterface exifInterface = new ExifInterface(mSelectPath);
                 //bitmapUri = originalUri;
                 bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);
@@ -152,7 +178,7 @@ public class PublishActivity extends AppCompatActivity {
                 bm = Bitmap.createBitmap(bm, 0, 0, bitMapWidth, bitMapHeight, matrix, true);
                 ImageSpan imageSpan = new ImageSpan(this, bm);
 
-                String tempUrl = "<img src=\"" + "http://travel.shm.com.cn/files/2022-01/17/5253162_ff37a774-764f-4311-91af-5cb906aeb414.jpg" + "\" />";
+                String tempUrl = "<img src=\"" + "http://192.168.43.15:8025/uploaded/1646377540887IMG_20220224_132503.jpg" + "\" />";
                 SpannableString spannableString = new SpannableString(tempUrl);
                 /* 加载服务器返回的图片
                 final Bitmap[] bitmap = new Bitmap[1];
@@ -217,4 +243,14 @@ public class PublishActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void showErrorMessage(String msg) {
+
+    }
+
+    //拿到服务器返回的图片地址
+    @Override
+    public void showImagUrls(String[] imagUrls) {
+       showPublishContentActivity.actionStart(this, et.getEditableText().toString());
+    }
 }

@@ -179,7 +179,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
 
         if(user != null) {    //跳转到主页
             //保存用户信息到本地
-            SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
+            if(!isLogined()) SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
             createProgressBar();
             MainActivity.actionStart(this, user);
             this.finish();

@@ -8,6 +8,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 import com.example.newsapp.View.IBaseView;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class BasePresenter<T extends IBaseView> implements LifecycleObserver { //生命周期观察者
     //1.持有View接口的弱引用
@@ -63,5 +64,8 @@ public class BasePresenter<T extends IBaseView> implements LifecycleObserver { /
 
     public void fetch(String uniquekey) throws InterruptedException {
 
+    }
+
+    public void fetch(List<String> imagPaths) throws InterruptedException {
     }
 }
