@@ -43,6 +43,11 @@ import com.example.newsapp.View.IBaseView;
 import com.example.newsapp.View.NewsContentView.INewsContentView;
 import com.example.newsapp.View.Activity.showPublishContentActivity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,27 +183,8 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
                 bm = Bitmap.createBitmap(bm, 0, 0, bitMapWidth, bitMapHeight, matrix, true);
                 ImageSpan imageSpan = new ImageSpan(this, bm);
 
-                String tempUrl = "<img src=\"" + "http://192.168.43.15:8025/uploaded/1646377540887IMG_20220224_132503.jpg" + "\" />";
+                String tempUrl = "<img src=\"" + mSelectPath + "\" />";
                 SpannableString spannableString = new SpannableString(tempUrl);
-                /* 加载服务器返回的图片
-                final Bitmap[] bitmap = new Bitmap[1];
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        try {
-                            bitmap[0] = Glide.with(MyApplication.getContext()).asBitmap().load("http://travel.shm.com.cn/files/2022-01/17/5253162_ff37a774-764f-4311-91af-5cb906aeb414.jpg").submit().get();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                };
-                Thread thread = new Thread(runnable);
-                thread.start();
-                thread.join();
-                ImageSpan imageSpan2 = new ImageSpan(this, bitmap[0]);
-                 */
                 spannableString.setSpan(imageSpan, 0, tempUrl.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 // 将选择的图片追加到EditText中光标所在位置
                 int index = et.getSelectionStart();
@@ -251,6 +237,35 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     //拿到服务器返回的图片地址
     @Override
     public void showImagUrls(String[] imagUrls) {
-       showPublishContentActivity.actionStart(this, et.getEditableText().toString());
+       showPublishContentActivity.actionStart(this, getEditText(imagUrls));
+    }
+
+    /**
+     * 用网络路径替换本地路径
+     * @param imagUrls 上传图片后得到的网络路径集合
+     * @return editText 替换后的文本内容(用于最终上传)
+     */
+    public String getEditText(String[] imagUrls) {
+        Editable edit = et.getText();
+        String cont = edit.toString();
+        ImageSpan[] spans = edit.getSpans(0,edit.length(),
+                ImageSpan.class);
+
+        int size = spans.length;
+        for (int i = 0; i < size ; i++) {
+            int start = edit.getSpanStart(spans[i]) + 9; //src的位置
+            int end = edit.getSpanEnd(spans[i]) - 3;
+            String path = edit.toString().substring(start, end);
+            cont = cont.replace(path, imagUrls[i]);
+        }
+        String head="<style>\n" +
+                "  \n" +
+                "img{\n" +
+                " max-width:100%;\n" +
+                " height:auto;\n" +
+                "}\n" +
+                "  \n" +
+                "</style>";
+        return head + cont;
     }
 }

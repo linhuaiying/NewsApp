@@ -41,7 +41,7 @@ public class PublishModel {
         }
 
         List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8025/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8070/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
