@@ -18,14 +18,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PublishModel {
     List<String> imagPaths;
-    public PublishModel(List<String> imagPaths) {
+    String newsContent = "";
+    String username = "";
+    public PublishModel(List<String> imagPaths, String newsContent, String username) {
         this.imagPaths = imagPaths;
+        this.newsContent = newsContent;
+        this.username = username;
     }
     public void loadImagUrls(PublishModel.OnLoadListener onLoadListener) throws InterruptedException {
         onLoadListener.onComplete(sendImags(imagPaths));
     }
+    public void loadNewsContent(OnSendListener onSendListener) throws InterruptedException {
+        onSendListener.onComplete(sendNewsContent(newsContent, username));
+    }
     public interface OnLoadListener{ //判断数据是否成功接收
-        void onComplete(String[] imagUrls); //成功了就拿到数据
+        void onComplete(String[] imagUrls) throws InterruptedException; //成功了就拿到数据
+        void onError(String msg);
+    }
+    public interface OnSendListener{ //判断数据是否成功上传
+        void onComplete(String msg); //成功了就拿到返回值
         void onError(String msg);
     }
     //向服务器发送多张图片,获取图片网络地址
@@ -37,11 +48,11 @@ public class PublishModel {
         for (int i = 0; i < imagPaths.size(); i++) {
             File file = new File(imagPaths.get(i));//filePath 图片地址
             RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            builder.addFormDataPart("file", file.getName(), imageBody);//"imgfile"+i 后台接收图片流的参数名
+            builder.addFormDataPart("file", file.getName(), imageBody);
         }
-
+        if(imagPaths.size() == 0) builder.addFormDataPart("", "");
         List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8070/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.24.13.115:8078/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
@@ -52,7 +63,7 @@ public class PublishModel {
                 try {
                     Response<ResponseBody> response = call.execute();
                     String content = response.body().string();
-                    imagUrls[0] = content.substring(1, content.length() - 1).split(",");
+                    if(!content.equals("")) imagUrls[0] = content.substring(1, content.length() - 1).split(",");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -62,5 +73,28 @@ public class PublishModel {
         thread.start();
         thread.join();
         return imagUrls[0];
+    }
+    public String sendNewsContent(String newsContent, String username) throws InterruptedException {
+        final String[] msg = {""};
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.24.13.115:8078/")
+                .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
+                .build();
+        PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
+        Call<ResponseBody> call = publishService.uploadNewsContent(newsContent, username);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response<ResponseBody> response = call.execute();
+                    msg[0] = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        thread.join();
+        return msg[0];
     }
 }

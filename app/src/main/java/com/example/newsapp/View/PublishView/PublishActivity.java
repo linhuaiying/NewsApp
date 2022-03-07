@@ -35,9 +35,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.Presenter.NewsContentPresenter.NewsContentPresenter;
 import com.example.newsapp.Presenter.PublishPresenter.PublishPresenter;
 import com.example.newsapp.R;
+import com.example.newsapp.Toast.MyToast;
 import com.example.newsapp.View.BaseActivity;
 import com.example.newsapp.View.IBaseView;
 import com.example.newsapp.View.NewsContentView.INewsContentView;
@@ -229,6 +231,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
         }
     };
 
+    //上传图片失败回调
     @Override
     public void showErrorMessage(String msg) {
 
@@ -236,8 +239,17 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
 
     //拿到服务器返回的图片地址
     @Override
-    public void showImagUrls(String[] imagUrls) {
-       showPublishContentActivity.actionStart(this, getEditText(imagUrls));
+    public void showImagUrls(String[] imagUrls) throws InterruptedException {
+      // showPublishContentActivity.actionStart(this, getEditText(imagUrls));
+       //上传替换后的文本内容
+       presenter.fetch(getEditText(imagUrls), SaveAccount.getUserInfo(this).get("userName"));
+    }
+
+    //上传新闻内容成功后回调
+    @Override
+    public void showSuccessMsg(String msg) {
+        //MyToast.toast(msg);
+        showPublishContentActivity.actionStart(this, msg);
     }
 
     /**
