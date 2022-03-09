@@ -6,6 +6,8 @@ import com.example.newsapp.Application.MyApplication;
 
 public class MyToast {
     public static void toast(String s) {
-        Toast.makeText(MyApplication.getContext(), s, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(MyApplication.getContext(), null, Toast.LENGTH_SHORT);
+        toast.setText(s);
+        toast.show();
     }
 }

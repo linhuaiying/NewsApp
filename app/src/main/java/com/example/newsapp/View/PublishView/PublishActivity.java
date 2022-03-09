@@ -28,10 +28,13 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -40,10 +43,12 @@ import com.example.newsapp.Presenter.NewsContentPresenter.NewsContentPresenter;
 import com.example.newsapp.Presenter.PublishPresenter.PublishPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
+import com.example.newsapp.View.Activity.MainActivity;
 import com.example.newsapp.View.BaseActivity;
 import com.example.newsapp.View.IBaseView;
 import com.example.newsapp.View.NewsContentView.INewsContentView;
 import com.example.newsapp.View.Activity.showPublishContentActivity;
+import com.example.newsapp.bean.Userbean.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -52,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView> implements IPublishView {
@@ -62,6 +68,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     Button photos;
     TextView cancel;
     TextView publish;
+    ProgressBar mProBar;
     //读写权限
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -71,11 +78,14 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     int screenHeight;
     int screenWidth;
     List<String> imagPaths = new ArrayList<>();
+    User user = new User();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        user.setUsername(SaveAccount.getUserInfo(this).get("userName"));
+        user.setPassword(SaveAccount.getUserInfo(this).get("password"));
         //2、通过Resources获取
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenHeight = dm.heightPixels;
@@ -242,14 +252,20 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     public void showImagUrls(String[] imagUrls) throws InterruptedException {
       // showPublishContentActivity.actionStart(this, getEditText(imagUrls));
        //上传替换后的文本内容
-       presenter.fetch(getEditText(imagUrls), SaveAccount.getUserInfo(this).get("userName"));
+       presenter.fetch(getEditText(imagUrls), user.getUsername());
     }
 
     //上传新闻内容成功后回调
     @Override
     public void showSuccessMsg(String msg) {
-        //MyToast.toast(msg);
-        showPublishContentActivity.actionStart(this, msg);
+        //showPublishContentActivity.actionStart(this, msg);
+        if(msg.equals("success")) {
+            createProgressBar();
+            MainActivity.actionStart(this, user);
+            this.finish();
+        } else {
+            MyToast.toast("发布失败，请检查网络！");
+        }
     }
 
     /**
@@ -279,5 +295,35 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
                 "  \n" +
                 "</style>";
         return head + cont;
+    }
+
+    //进度条
+    private void createProgressBar() {
+        FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+        mProBar = new ProgressBar(this);
+        mProBar.setLayoutParams(layoutParams);
+        mProBar.setVisibility(View.VISIBLE);
+        layout.addView(mProBar);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mProBar.setVisibility(View.GONE);
+                MyToast.toast("发布成功!");
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                PublishActivity.this.runOnUiThread(runnable);
+            }
+        }).start();
     }
 }

@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_news"
-        android:icon="@drawable/nav_circle"
+        android:icon="@drawable/nav_home"
         android:title="首页" />
     <item
         android:id="@+id/item_finding"
-        android:icon="@drawable/nav_friends"
-        android:title="发现" />
+        android:icon="@drawable/nav_concern"
+        android:title="关注" />
     <item
         android:id="@+id/item_plus"
-        android:icon="@drawable/nav_play"
-        android:title="添加"
+        android:icon="@drawable/nav_person"
+        android:title="我的"
         />
 </menu>
