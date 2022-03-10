@@ -17,7 +17,7 @@ public interface PublishService {
     @POST("/upload")
     Call<ResponseBody> uploadImags(@Part List<MultipartBody.Part> partList);
 
-    @POST("user/uploadNewsContent") //必须用post请求
+    @POST("news/sendNewsContent") //必须用post请求
     @FormUrlEncoded
-    Call<ResponseBody> uploadNewsContent(@Field("newscontent") String newsContent, @Field("username") String username);
+    Call<ResponseBody> uploadNewsContent(@Field("title") String title, @Field("newscontent") String newsContent, @Field("username") String username);
 }

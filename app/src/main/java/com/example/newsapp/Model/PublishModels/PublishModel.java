@@ -20,16 +20,18 @@ public class PublishModel {
     List<String> imagPaths;
     String newsContent = "";
     String username = "";
-    public PublishModel(List<String> imagPaths, String newsContent, String username) {
+    String title = "";
+    public PublishModel(List<String> imagPaths, String title, String newsContent, String username) {
         this.imagPaths = imagPaths;
         this.newsContent = newsContent;
         this.username = username;
+        this.title =  title;
     }
     public void loadImagUrls(PublishModel.OnLoadListener onLoadListener) throws InterruptedException {
         onLoadListener.onComplete(sendImags(imagPaths));
     }
     public void loadNewsContent(OnSendListener onSendListener) throws InterruptedException {
-        onSendListener.onComplete(sendNewsContent(newsContent, username));
+        onSendListener.onComplete(sendNewsContent(title, newsContent, username));
     }
     public interface OnLoadListener{ //判断数据是否成功接收
         void onComplete(String[] imagUrls) throws InterruptedException; //成功了就拿到数据
@@ -52,7 +54,7 @@ public class PublishModel {
         }
         if(imagPaths.size() == 0) builder.addFormDataPart("", "");
         List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8080/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8087/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
@@ -74,13 +76,13 @@ public class PublishModel {
         thread.join();
         return imagUrls[0];
     }
-    public String sendNewsContent(String newsContent, String username) throws InterruptedException {
+    public String sendNewsContent(String title, String newsContent, String username) throws InterruptedException {
         final String[] msg = {""};
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8080/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8087/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
-        Call<ResponseBody> call = publishService.uploadNewsContent(newsContent, username);
+        Call<ResponseBody> call = publishService.uploadNewsContent(title, newsContent, username);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

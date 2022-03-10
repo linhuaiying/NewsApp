@@ -1,4 +1,4 @@
-package com.example.newsapp.View.NewsView;
+package com.example.newsapp.View.NewsView.JuHeNews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.Presenter.NewsPresenter.GameNewsPresenter;
 import com.example.newsapp.R;
+import com.example.newsapp.View.NewsView.BaseFragment;
 import com.example.newsapp.adapter.NewsAdapter;
 import com.example.newsapp.bean.Newsbean.News;
 

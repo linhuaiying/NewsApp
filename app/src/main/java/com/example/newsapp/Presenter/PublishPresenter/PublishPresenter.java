@@ -11,7 +11,7 @@ public class PublishPresenter<T extends IPublishView> extends BasePresenter {
 
     @Override
     public void fetch(List imagPaths) throws InterruptedException {
-        publishModel = new PublishModel(imagPaths, null, null);
+        publishModel = new PublishModel(imagPaths, null,null, null);
         if(iView.get() != null && publishModel != null) {
             publishModel.loadImagUrls(new PublishModel.OnLoadListener() {
                 @Override
@@ -28,8 +28,8 @@ public class PublishPresenter<T extends IPublishView> extends BasePresenter {
     }
 
     @Override
-    public void fetch(String data, String username) throws InterruptedException {
-        publishModel = new PublishModel(null, data, username);
+    public void fetch(String title, String data, String username) throws InterruptedException {
+        publishModel = new PublishModel(null, title, data, username);
         if(iView.get() != null && publishModel != null) {
             publishModel.loadNewsContent(new PublishModel.OnSendListener() {
                 @Override

@@ -64,6 +64,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
 
     ScrollView scrollView;
     EditText et;
+    EditText title;
     LinearLayout ll;
     Button photos;
     TextView cancel;
@@ -92,6 +93,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
         screenWidth = dm.widthPixels;
         scrollView = findViewById(R.id.scrollView);
         et = findViewById(R.id.et);
+        title = findViewById(R.id.title);
         ll = findViewById(R.id.ll);
         publish = findViewById(R.id.publish);
         cancel = findViewById(R.id.cancel);
@@ -252,7 +254,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     public void showImagUrls(String[] imagUrls) throws InterruptedException {
       // showPublishContentActivity.actionStart(this, getEditText(imagUrls));
        //上传替换后的文本内容
-       presenter.fetch(getEditText(imagUrls), user.getUsername());
+       presenter.fetch(title.getText().toString(), getEditText(imagUrls), user.getUsername());
     }
 
     //上传新闻内容成功后回调

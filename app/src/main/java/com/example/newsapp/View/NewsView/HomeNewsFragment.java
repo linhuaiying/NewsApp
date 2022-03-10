@@ -12,13 +12,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
+import com.example.newsapp.View.NewsView.JuHeNews.FinanceNewsFragment;
+import com.example.newsapp.View.NewsView.JuHeNews.GameNewsFragment;
+import com.example.newsapp.View.NewsView.JuHeNews.TopNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsFragment extends Fragment {
+public class HomeNewsFragment extends Fragment {
     List<BaseFragment> fragments= new ArrayList<>();
     TabLayout tabLayout;
     ViewPager vp;
@@ -28,7 +31,7 @@ public class NewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.news_layout, container, false);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.home_news_layout, container, false);
         attachTab(view);
         swipeRefreshLayout = view.findViewById(R.id.news_fresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

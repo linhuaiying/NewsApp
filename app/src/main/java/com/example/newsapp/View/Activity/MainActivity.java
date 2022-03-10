@@ -23,9 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
-import com.example.newsapp.View.NewsView.Fragment2;
-import com.example.newsapp.View.NewsView.Fragment3;
-import com.example.newsapp.View.NewsView.NewsFragment;
+import com.example.newsapp.View.NewsView.ConcernNews.ConcernNewsFragment;
+import com.example.newsapp.View.NewsView.MyFragment;
+import com.example.newsapp.View.NewsView.HomeNewsFragment;
 import com.example.newsapp.View.PublishView.PublishActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
 import com.example.newsapp.bean.Userbean.User;
@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.mainviewpaper);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        fragments.add(new NewsFragment());
-        fragments.add(new Fragment2());
-        fragments.add(new Fragment3());
+        fragments.add(new HomeNewsFragment());
+        fragments.add(new ConcernNewsFragment());
+        fragments.add(new MyFragment());
         MainFragmentAdapter mainFragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(mainFragmentAdapter);
         viewPager.setOffscreenPageLimit(fragments.size());

@@ -47,6 +47,15 @@
             android:orientation="vertical"
             >
             <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入标题            "
+                android:backgroundTint="@android:color/transparent"
+                android:textSize="24sp"
+                />
+
+            <EditText
                 android:id="@+id/et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
