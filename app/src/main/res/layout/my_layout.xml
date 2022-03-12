@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+    </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/shape_card"
+        android:layout_marginTop="100dp"
+        android:padding="20dp">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="获赞"
+                android:textSize="14sp"
+                android:textColor="@color/colorGray"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="粉丝"
+                android:textSize="14sp"
+                android:textColor="@color/colorGray"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="关注"
+                android:textSize="14sp"
+                android:textColor="@color/colorGray"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="14sp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="14sp"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </GridLayout>
+        <Button
+            android:id="@+id/out_btn"
+            android:layout_width="243dp"
+            android:layout_height="37dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape"
+            android:text="退出登录"
+            android:textColor="#FFFFFF"
+            android:stateListAnimator="@null"
+            />
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/icon"/>
+
+</FrameLayout>
