@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,7 +24,8 @@
             android:columnCount="3"
             android:rowCount="2"
             android:orientation="horizontal"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:id="@+id/GridLayout">
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -64,17 +66,60 @@
                 android:textSize="14sp"
                 android:gravity="center"/>
         </GridLayout>
+        <TextView
+            android:id="@+id/nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13067456571"
+            android:textSize="16sp"
+            android:layout_marginTop="60dp"/>
         <Button
-            android:id="@+id/out_btn"
-            android:layout_width="243dp"
-            android:layout_height="37dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/shape"
-            android:text="退出登录"
-            android:textColor="#FFFFFF"
+            android:id="@+id/exit_btn"
+            android:layout_width="65dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="58dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/gray"
+            android:text="编辑资料"
+            android:textSize="12sp"
+            android:textColor="@color/colorGray"
             android:stateListAnimator="@null"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更多资料 >"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="90dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="124dp">
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tablayout"
+                android:background="#ffffff"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabIndicatorHeight="2dp"
+                app:tabTextColor="#000"
+                />
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/news_fresh">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/viewpaper">
+                </androidx.viewpager.widget.ViewPager>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -84,5 +129,13 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="80dp"
         android:src="@drawable/icon"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#F5F5F5"
+        android:id="@+id/divide"
+        android:layout_marginTop="240dp"
+        />
 
 </FrameLayout>

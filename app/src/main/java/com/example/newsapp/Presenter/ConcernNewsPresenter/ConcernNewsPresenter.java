@@ -2,7 +2,7 @@ package com.example.newsapp.Presenter.ConcernNewsPresenter;
 
 import com.example.newsapp.Model.ConcernNewsModels.ConcernNewsModel;
 import com.example.newsapp.Presenter.BasePresenter;
-import com.example.newsapp.View.NewsView.ConcernNews.IConcernNewsView;
+import com.example.newsapp.View.MainView.ConcernNews.IConcernNewsView;
 import com.example.newsapp.bean.ConcernNewsbean.ConcernNews;
 
 import java.util.List;

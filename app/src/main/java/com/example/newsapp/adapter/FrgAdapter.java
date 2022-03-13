@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.newsapp.View.NewsView.BaseFragment;
+import com.example.newsapp.View.MainView.BaseFragment;
 
 import java.util.List;
 

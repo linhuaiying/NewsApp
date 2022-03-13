@@ -1,4 +1,4 @@
-package com.example.newsapp.View.NewsView;
+package com.example.newsapp.View.MainView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
-import com.example.newsapp.View.NewsView.JuHeNews.FinanceNewsFragment;
-import com.example.newsapp.View.NewsView.JuHeNews.GameNewsFragment;
-import com.example.newsapp.View.NewsView.JuHeNews.TopNewsFragment;
+import com.example.newsapp.View.MainView.JuHeNews.FinanceNewsFragment;
+import com.example.newsapp.View.MainView.JuHeNews.GameNewsFragment;
+import com.example.newsapp.View.MainView.JuHeNews.TopNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
 import com.google.android.material.tabs.TabLayout;
 

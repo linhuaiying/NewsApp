@@ -1,4 +1,4 @@
-package com.example.newsapp.View.NewsView.ConcernNews;
+package com.example.newsapp.View.MainView.ConcernNews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.newsapp.Presenter.ConcernNewsPresenter.ConcernNewsPresenter;
 import com.example.newsapp.R;
-import com.example.newsapp.View.NewsView.BaseFragment;
+import com.example.newsapp.View.MainView.BaseFragment;
 import com.example.newsapp.adapter.ConcernNewsAdapter;
 import com.example.newsapp.bean.ConcernNewsbean.ConcernNews;
 

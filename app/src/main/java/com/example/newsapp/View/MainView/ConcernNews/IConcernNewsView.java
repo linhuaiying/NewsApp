@@ -1,4 +1,4 @@
-package com.example.newsapp.View.NewsView.ConcernNews;
+package com.example.newsapp.View.MainView.ConcernNews;
 
 import com.example.newsapp.View.IBaseView;
 import com.example.newsapp.bean.ConcernNewsbean.ConcernNews;

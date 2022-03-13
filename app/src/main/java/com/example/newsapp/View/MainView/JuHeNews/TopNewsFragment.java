@@ -1,4 +1,4 @@
-package com.example.newsapp.View.NewsView.JuHeNews;
+package com.example.newsapp.View.MainView.JuHeNews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.newsapp.Presenter.NewsPresenter.GameNewsPresenter;
+import com.example.newsapp.Presenter.NewsPresenter.TopNewsPresenter;
 import com.example.newsapp.R;
-import com.example.newsapp.View.NewsView.BaseFragment;
+import com.example.newsapp.View.MainView.BaseFragment;
 import com.example.newsapp.adapter.NewsAdapter;
 import com.example.newsapp.bean.Newsbean.News;
 
 import java.util.List;
 
-public class GameNewsFragment extends BaseFragment<GameNewsPresenter, INewsView> implements INewsView {
+public class TopNewsFragment extends BaseFragment<TopNewsPresenter, INewsView> implements INewsView {
     RecyclerView recyclerView;
     NewsAdapter newsAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.game_news_layout, container, false);
-        recyclerView = view.findViewById(R.id.gamenewsList);
+       View view = LayoutInflater.from(container.getContext()).inflate(R.layout.top_news_layout, container, false);
+        recyclerView = view.findViewById(R.id.topnewsList);
         try {
             presenter.fetch();
         } catch (InterruptedException e) {
@@ -33,9 +34,10 @@ public class GameNewsFragment extends BaseFragment<GameNewsPresenter, INewsView>
         }
         return view;
     }
+
     @Override
-    protected GameNewsPresenter createPresenter() {
-        return new GameNewsPresenter();
+    protected TopNewsPresenter createPresenter() {
+        return new TopNewsPresenter();
     }
 
     @Override
@@ -56,4 +58,6 @@ public class GameNewsFragment extends BaseFragment<GameNewsPresenter, INewsView>
         super.init();
         getLifecycle().addObserver(presenter); //添加观察者
     }
+
+
 }

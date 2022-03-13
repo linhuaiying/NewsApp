@@ -7,7 +7,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.newsapp.Model.NewsModels.GameNewsModel;
 import com.example.newsapp.Model.NewsModels.NewsModel;
 import com.example.newsapp.Presenter.BasePresenter;
-import com.example.newsapp.View.NewsView.JuHeNews.INewsView;
+import com.example.newsapp.View.MainView.JuHeNews.INewsView;
 import com.example.newsapp.bean.Newsbean.News;
 
 import java.util.List;
