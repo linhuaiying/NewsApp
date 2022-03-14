@@ -9,27 +9,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.R;
-import com.example.newsapp.bean.ConcernNewsbean.ConcernNews;
+import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 import com.example.newsapp.View.Activity.showPublishContentActivity;
 
 import java.util.List;
 
-public class ConcernNewsAdapter extends RecyclerView.Adapter<ConcernNewsAdapter.ConcernNewsViewHolder> {
-    private List<ConcernNews> concernNewsList;
+public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.ConcernNewsViewHolder> {
+    private List<UsersNews> usersNewsList;
 
-    public ConcernNewsAdapter(List<ConcernNews> concernNewsList) {
-        this.concernNewsList = concernNewsList;
+    public UsersNewsAdapter(List<UsersNews> usersNewsList) {
+        this.usersNewsList = usersNewsList;
     }
     @NonNull
     @Override
     public ConcernNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.concern_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.users_news_item_layout, parent, false);
         ConcernNewsViewHolder concernNewsViewHolder = new ConcernNewsViewHolder(view);
         concernNewsViewHolder.concernNewsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = concernNewsViewHolder.getAdapterPosition();
-                String content = concernNewsList.get(position).getNewsContent();
+                String content = usersNewsList.get(position).getNewsContent();
                 showPublishContentActivity.actionStart(parent.getContext(), content);
             }
         });
@@ -38,15 +38,15 @@ public class ConcernNewsAdapter extends RecyclerView.Adapter<ConcernNewsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ConcernNewsViewHolder holder, int position) {
-        ConcernNews concernNews = concernNewsList.get(position);
-        holder.title.setText(concernNews.getTitle());
-        holder.time.setText(concernNews.getDate());
-        if(position == concernNewsList.size() - 1) holder.divide.setVisibility(View.GONE);
+        UsersNews usersNews = usersNewsList.get(position);
+        holder.title.setText(usersNews.getTitle());
+        holder.time.setText(usersNews.getDate());
+        if(position == usersNewsList.size() - 1) holder.divide.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return concernNewsList.size();
+        return usersNewsList.size();
     }
 
     static class ConcernNewsViewHolder extends RecyclerView.ViewHolder{

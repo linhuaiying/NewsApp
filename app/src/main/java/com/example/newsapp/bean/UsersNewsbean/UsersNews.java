@@ -1,6 +1,6 @@
-package com.example.newsapp.bean.ConcernNewsbean;
+package com.example.newsapp.bean.UsersNewsbean;
 
-public class ConcernNews {
+public class UsersNews {
     private String userName;
     private String newsContent;
     private String date;

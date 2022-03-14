@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,16 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.newsapp.Application.MyApplication;
 import com.example.newsapp.R;
-import com.example.newsapp.View.MainView.BaseFragment;
-import com.example.newsapp.View.MainView.ConcernNews.ConcernNewsFragment;
-import com.example.newsapp.View.MainView.JuHeNews.FinanceNewsFragment;
-import com.example.newsapp.View.MainView.JuHeNews.GameNewsFragment;
-import com.example.newsapp.View.MainView.JuHeNews.TopNewsFragment;
-import com.example.newsapp.View.MainView.MyView.MyNewsFragment;
+import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
+import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
-import com.example.newsapp.adapter.MainFragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -75,8 +68,8 @@ public class MyFragment extends Fragment {
 
     public void attachTab(View view) {
         //构造适配器
-        fragments.add(new ConcernNewsFragment());
-        fragments.add(new ConcernNewsFragment());
+        fragments.add(new MyNewsFragment());
+        fragments.add(new MyNewsFragment());
         FrgAdapter adapter = new FrgAdapter(getChildFragmentManager(), fragments); //要用childFragmentManager，不然显示不出来
 
         //设定适配器

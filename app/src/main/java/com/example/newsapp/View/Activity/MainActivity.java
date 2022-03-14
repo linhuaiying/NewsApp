@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
-import com.example.newsapp.View.MainView.ConcernNews.ConcernNewsFragment;
+import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.View.MainView.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
 import com.example.newsapp.View.PublishView.PublishActivity;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.mainviewpaper);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragments.add(new HomeNewsFragment());
-        fragments.add(new ConcernNewsFragment());
+        fragments.add(new UsersNewsFragment());
         fragments.add(new MyFragment());
         MainFragmentAdapter mainFragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(mainFragmentAdapter);
@@ -110,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
-                    case R.id.item_news:
+                    case R.id.item_home:
                         viewPager.setCurrentItem(0);
                         break;
-                    case R.id.item_finding:
+                    case R.id.item_find:
                         viewPager.setCurrentItem(1);
                         break;
-                    case R.id.item_plus:
+                    case R.id.item_my:
                         viewPager.setCurrentItem(2);
                         break;
                 }

@@ -1,9 +1,10 @@
-package com.example.newsapp.View.MainView.ConcernNews;
+package com.example.newsapp.View.MainView.MyNews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,25 +12,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.newsapp.Presenter.ConcernNewsPresenter.ConcernNewsPresenter;
+import com.example.newsapp.LocalUtils.SaveAccount;
+import com.example.newsapp.Presenter.MyNewsPresenter.MyNewsPresenter;
+import com.example.newsapp.Presenter.UsersNewsPresenter.UsersNewsPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.MainView.BaseFragment;
-import com.example.newsapp.adapter.ConcernNewsAdapter;
-import com.example.newsapp.bean.ConcernNewsbean.ConcernNews;
+import com.example.newsapp.View.MainView.UsersNews.IUsersNewsView;
+import com.example.newsapp.adapter.UsersNewsAdapter;
+import com.example.newsapp.bean.Userbean.User;
+import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 
 import java.util.List;
 
-public class ConcernNewsFragment extends BaseFragment<ConcernNewsPresenter, IConcernNewsView> implements IConcernNewsView {
+
+public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> implements IMyNewsView {
     RecyclerView recyclerView;
-    ConcernNewsAdapter concernNewsAdapter;
+    UsersNewsAdapter usersNewsAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.concern_news_layout, container, false);
-        recyclerView = view.findViewById(R.id.concernnewsList);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.users_news_layout, container, false);
+        recyclerView = view.findViewById(R.id.usersnewsList);
         try {
-            presenter.fetch();
+            presenter.fetch(SaveAccount.getUserInfo(getActivity()).get("userName"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -70,15 +76,16 @@ public class ConcernNewsFragment extends BaseFragment<ConcernNewsPresenter, ICon
     }
 
     @Override
-    protected ConcernNewsPresenter createPresenter() {
-        return new ConcernNewsPresenter();
+    protected MyNewsPresenter createPresenter() {
+        return new MyNewsPresenter();
     }
 
+
     @Override
-    public void showNewsView(List<ConcernNews> concernNewsList) {
-        concernNewsAdapter = new ConcernNewsAdapter(concernNewsList);
+    public void showNewsView(List<UsersNews> myNewsList) {
+        usersNewsAdapter = new UsersNewsAdapter(myNewsList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(concernNewsAdapter);
+        recyclerView.setAdapter(usersNewsAdapter);
     }
 }

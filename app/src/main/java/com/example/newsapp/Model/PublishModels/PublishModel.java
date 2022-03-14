@@ -54,7 +54,7 @@ public class PublishModel {
         }
         if(imagPaths.size() == 0) builder.addFormDataPart("", "");
         List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8087/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8088/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
@@ -78,7 +78,7 @@ public class PublishModel {
     }
     public String sendNewsContent(String title, String newsContent, String username) throws InterruptedException {
         final String[] msg = {""};
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8087/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8088/")
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
