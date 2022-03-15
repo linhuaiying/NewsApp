@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
+import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
 import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
@@ -28,6 +30,7 @@ public class MyFragment extends Fragment {
     ViewPager vp;
     String[] titles = new String[]{"全部文章", "收藏"};
     SwipeRefreshLayout swipeRefreshLayout;
+    Button editBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -35,6 +38,13 @@ public class MyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.my_layout, container, false);
         attachTab(view);
+        editBtn = view.findViewById(R.id.exit_btn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditiInfoActivity.actionStart(container.getContext());
+            }
+        });
         swipeRefreshLayout = view.findViewById(R.id.news_fresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
