@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +22,7 @@
             android:layout_marginLeft="10dp"
             />
         <TextView
-            android:id="@+id/publish"
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="保存"
@@ -66,6 +65,7 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="13067456571"
@@ -90,6 +90,7 @@
         android:layout_marginTop="15dp"/>
 
     <EditText
+        android:id="@+id/nick_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="请输入昵称"
@@ -117,6 +118,7 @@
         android:layout_marginTop="15dp"/>
 
     <EditText
+        android:id="@+id/sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="一句话介绍你自己"
@@ -149,6 +151,7 @@
             android:textSize="18sp"/>
 
         <TextView
+            android:id="@+id/sex_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

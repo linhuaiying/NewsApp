@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.R;
 import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
@@ -31,6 +33,8 @@ public class MyFragment extends Fragment {
     String[] titles = new String[]{"全部文章", "收藏"};
     SwipeRefreshLayout swipeRefreshLayout;
     Button editBtn;
+    TextView textView;
+    String nickName;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -38,6 +42,11 @@ public class MyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.my_layout, container, false);
         attachTab(view);
+        textView = view.findViewById(R.id.nick_name);
+        nickName = SaveAccount.getUserInfo(container.getContext()).get("nickName");
+        if(nickName != null) {
+            textView.setText(nickName);
+        }
         editBtn = view.findViewById(R.id.exit_btn);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +83,15 @@ public class MyFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        nickName = SaveAccount.getUserInfo(getActivity()).get("nickName");
+        if(nickName != null) {
+            textView.setText(nickName);
+        }
     }
 
     public void attachTab(View view) {
