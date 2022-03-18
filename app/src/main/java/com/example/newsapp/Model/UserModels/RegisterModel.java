@@ -2,6 +2,7 @@ package com.example.newsapp.Model.UserModels;
 
 import android.util.Log;
 
+import com.example.newsapp.LocalUtils.UrlConfig;
 import com.example.newsapp.Service.UserService;
 import com.example.newsapp.bean.Userbean.User;
 import com.example.newsapp.bean.Userbean.UserResponse;
@@ -57,7 +58,7 @@ public class RegisterModel {
         return msg;
     }
     public void saveData() throws InterruptedException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.24.72.70:8080/") //ipv4地址
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl) //ipv4地址
                 .build();
         UserService registerService = retrofit.create(UserService.class); //Retrofit将这个接口进行实现
         Call<ResponseBody> call = registerService.saveUser(username, password);

@@ -1,5 +1,6 @@
 package com.example.newsapp.Service;
 
+import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.example.newsapp.bean.Userbean.UserResponse;
 
 import okhttp3.ResponseBody;
@@ -21,4 +22,12 @@ public interface UserService {
     @POST("user/save") //必须用post请求
     @FormUrlEncoded
     Call<ResponseBody> saveUser(@Field("username") String username, @Field("password") String password);
+
+    @POST("user/update") //必须用post请求
+    @FormUrlEncoded
+    Call<ResponseBody> updateUser(@Field("username") String username, @Field("nickname") String nickName, @Field("sex") String sex, @Field("sign") String sign);
+
+    @POST("user/get") //必须用post请求
+    @FormUrlEncoded
+    Call<MyUser> getUser(@Field("username") String username);
 }

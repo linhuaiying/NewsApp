@@ -15,9 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
+import com.example.newsapp.Presenter.EditInfoPresenter.EditInfoPresenter;
 import com.example.newsapp.R;
+import com.example.newsapp.Toast.MyToast;
+import com.example.newsapp.View.BaseActivity;
 
-public class EditiInfoActivity extends AppCompatActivity {
+public class EditiInfoActivity extends BaseActivity<EditInfoPresenter, IEditInfoView> implements IEditInfoView {
 
     LinearLayout sexLinearLayout;
     TextView sexText;
@@ -29,12 +32,14 @@ public class EditiInfoActivity extends AppCompatActivity {
     String sex;
     String sign;
     String nickName;
+    String userName;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editi_info);
+        userName = SaveAccount.getUserInfo(this).get("userName");
         sex = SaveAccount.getUserInfo(this).get("sex");
         sign = SaveAccount.getUserInfo(this).get("sign");
         nickName = SaveAccount.getUserInfo(this).get("nickName");
@@ -48,9 +53,12 @@ public class EditiInfoActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //presenter.fetch
                 SaveAccount.saveExtraUserInfo(EditiInfoActivity.this, nickNameEt.getText().toString(), sexText.getText().toString(), signEt.getText().toString());
-                EditiInfoActivity.this.finish();
+                try {
+                    presenter.fetch(userName, nickNameEt.getText().toString(), sexText.getText().toString(), signEt.getText().toString());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         sexLinearLayout = findViewById(R.id.sex_linearLayout);
@@ -77,8 +85,28 @@ public class EditiInfoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected EditInfoPresenter createPresenter() {
+        return new EditInfoPresenter();
+    }
+
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, EditiInfoActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void showSuccessMsg(String msg) {
+        if(msg.equals("success")) {
+            MyToast.toast("修改成功！");
+            this.finish();
+        } else {
+            MyToast.toast("发布失败，请检查网络！");
+        }
+    }
+
+    @Override
+    public void showErrorMessage(String msg) {
+
     }
 }

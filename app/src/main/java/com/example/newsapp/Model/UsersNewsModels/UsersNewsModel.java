@@ -1,5 +1,6 @@
 package com.example.newsapp.Model.UsersNewsModels;
 
+import com.example.newsapp.LocalUtils.UrlConfig;
 import com.example.newsapp.Service.UsersNewsService;
 import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 
@@ -23,7 +24,7 @@ public class UsersNewsModel {
     //该方法想象成数据是从网络或者数据库或者服务、、、地方来的
     public List<UsersNews> getData() throws InterruptedException {
         List<UsersNews>[] usersNewsList = new List[]{new ArrayList<>()};
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8088/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         UsersNewsService usersNewsService = retrofit.create(UsersNewsService.class); //Retrofit将这个接口进行实现

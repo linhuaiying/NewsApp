@@ -1,4 +1,7 @@
 package com.example.newsapp.View.EditInfoView;
 
-public interface IEditInfoView {
+import com.example.newsapp.View.IBaseView;
+
+public interface IEditInfoView extends IBaseView {
+    void showSuccessMsg(String msg);
 }

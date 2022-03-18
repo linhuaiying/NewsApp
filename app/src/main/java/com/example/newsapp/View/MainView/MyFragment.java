@@ -16,17 +16,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
+import com.example.newsapp.Presenter.MyUserPresenter.MyUserPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
 import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
+import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFragment extends Fragment {
+public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implements IMyView{
     List<BaseFragment> fragments= new ArrayList<>();
     TabLayout tabLayout;
     ViewPager vp;
@@ -35,6 +37,8 @@ public class MyFragment extends Fragment {
     Button editBtn;
     TextView textView;
     String nickName;
+    String sex;
+    String sign;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -44,8 +48,17 @@ public class MyFragment extends Fragment {
         attachTab(view);
         textView = view.findViewById(R.id.nick_name);
         nickName = SaveAccount.getUserInfo(container.getContext()).get("nickName");
+        sex = SaveAccount.getUserInfo(container.getContext()).get("sex");
+        sign = SaveAccount.getUserInfo(container.getContext()).get("sign");
+        //如果本地没有缓存就从服务器获取
         if(nickName != null) {
             textView.setText(nickName);
+        } else {
+            try {
+                presenter.fetch(SaveAccount.getUserInfo(container.getContext()).get("userName"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         editBtn = view.findViewById(R.id.exit_btn);
         editBtn.setOnClickListener(new View.OnClickListener() {
@@ -149,4 +162,18 @@ public class MyFragment extends Fragment {
         });
     }
 
+    @Override
+    public void showErrorMessage(String msg) {
+
+    }
+
+    @Override
+    protected MyUserPresenter createPresenter() {
+        return new MyUserPresenter();
+    }
+
+    @Override
+    public void showMyUser(MyUser myUser) {
+        SaveAccount.saveExtraUserInfo(getActivity(), myUser.getNickName(), myUser.getSex(), myUser.getSign());
+    }
 }

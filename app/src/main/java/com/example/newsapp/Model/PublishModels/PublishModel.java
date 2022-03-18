@@ -1,5 +1,6 @@
 package com.example.newsapp.Model.PublishModels;
 
+import com.example.newsapp.LocalUtils.UrlConfig;
 import com.example.newsapp.Service.PublishService;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class PublishModel {
         }
         if(imagPaths.size() == 0) builder.addFormDataPart("", "");
         List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8088/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
@@ -78,7 +79,7 @@ public class PublishModel {
     }
     public String sendNewsContent(String title, String newsContent, String username) throws InterruptedException {
         final String[] msg = {""};
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.43.15:8088/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                 .build();
         PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
