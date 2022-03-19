@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.newsapp.Application.MyApplication;
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.R;
 import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 import com.example.newsapp.View.Activity.showPublishContentActivity;
@@ -41,6 +43,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.Conc
         UsersNews usersNews = usersNewsList.get(position);
         holder.title.setText(usersNews.getTitle());
         holder.time.setText(usersNews.getDate());
+        holder.nickName.setText(SaveAccount.getUserInfo(MyApplication.getContext()).get("nickName"));
         if(position == usersNewsList.size() - 1) holder.divide.setVisibility(View.GONE);
     }
 
@@ -54,6 +57,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.Conc
         View concernNewsView;
         TextView title;
         TextView time;
+        TextView nickName;
         View divide;
         public ConcernNewsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +65,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.Conc
             title = itemView.findViewById(R.id.title);
             time = itemView.findViewById(R.id.time);
             divide = itemView.findViewById(R.id.divide);
+            nickName = itemView.findViewById(R.id.nick_name);
         }
 
     }

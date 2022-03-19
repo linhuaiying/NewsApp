@@ -1,11 +1,11 @@
 package com.example.newsapp.bean.MyUserbean;
 
 public class MyUser {
-    String userName = "";
-    String passWord = "";
-    String nickName = "";
-    String sex = "";
-    String sign = "";
+    String userName;
+    String passWord;
+    String nickName;
+    String sex;
+    String sign;
 
     public String getUserName() {
         return this.userName;

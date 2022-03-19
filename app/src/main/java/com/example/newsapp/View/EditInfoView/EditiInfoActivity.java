@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
+import com.example.newsapp.Model.EditInfoModels.EditInfoModel;
 import com.example.newsapp.Presenter.EditInfoPresenter.EditInfoPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
@@ -23,8 +24,10 @@ import com.example.newsapp.View.BaseActivity;
 public class EditiInfoActivity extends BaseActivity<EditInfoPresenter, IEditInfoView> implements IEditInfoView {
 
     LinearLayout sexLinearLayout;
+    TextView userNameText;
     TextView sexText;
     TextView save;
+    TextView cancel;
     EditText nickNameEt;
     EditText signEt;
     int selectItem = 0;
@@ -43,12 +46,21 @@ public class EditiInfoActivity extends BaseActivity<EditInfoPresenter, IEditInfo
         sex = SaveAccount.getUserInfo(this).get("sex");
         sign = SaveAccount.getUserInfo(this).get("sign");
         nickName = SaveAccount.getUserInfo(this).get("nickName");
+        userNameText = findViewById(R.id.username);
         sexText = findViewById(R.id.sex_text);
         nickNameEt = findViewById(R.id.nick_name);
         signEt = findViewById(R.id.sign);
+        userNameText.setText(userName);
         if(sex != null) sexText.setText(sex);
         if(nickName != null) nickNameEt.setText(nickName);
         if(sign != null) signEt.setText(sign);
+        cancel = findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditiInfoActivity.this.finish();
+            }
+        });
         save = findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.newsapp.View.MainView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,10 +20,10 @@ import com.example.newsapp.Presenter.MyUserPresenter.MyUserPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
-import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.google.android.material.tabs.TabLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,18 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     String[] titles = new String[]{"全部文章", "收藏"};
     SwipeRefreshLayout swipeRefreshLayout;
     Button editBtn;
-    TextView textView;
+    TextView nickNameText;
+    TextView nickNameText2;
+    TextView userNameText;
+    TextView sexText;
+    TextView signText;
+    TextView moreInfoText;
     String nickName;
     String sex;
     String sign;
+    String userName;
+    SlidingUpPanelLayout slidingUpPanelLayout;
+    TextView close;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -46,25 +54,53 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.my_layout, container, false);
         attachTab(view);
-        textView = view.findViewById(R.id.nick_name);
+        slidingUpPanelLayout = view.findViewById(R.id.sliding_layout);
+        nickNameText = view.findViewById(R.id.nick_name);
+        nickNameText2 = view.findViewById(R.id.nick_name_2);
+        userNameText = view.findViewById(R.id.username);
+        sexText = view.findViewById(R.id.sex_text);
+        signText = view.findViewById(R.id.sign);
+        moreInfoText = view.findViewById(R.id.moreInfo);
+
         nickName = SaveAccount.getUserInfo(container.getContext()).get("nickName");
         sex = SaveAccount.getUserInfo(container.getContext()).get("sex");
         sign = SaveAccount.getUserInfo(container.getContext()).get("sign");
+        userName = SaveAccount.getUserInfo(container.getContext()).get("userName");
+        userNameText.setText(userName);
         //如果本地没有缓存就从服务器获取
         if(nickName != null) {
-            textView.setText(nickName);
+            nickNameText.setText(nickName);
+            nickNameText2.setText(nickName);
         } else {
+            nickNameText.setText(userName);
             try {
-                presenter.fetch(SaveAccount.getUserInfo(container.getContext()).get("userName"));
+                presenter.fetch(userName);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        if(sex != null) sexText.setText(sex);
+        if(sign != null) signText.setText(sign);
         editBtn = view.findViewById(R.id.exit_btn);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditiInfoActivity.actionStart(container.getContext());
+            }
+        });
+        moreInfoText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slidingUpPanelLayout.setAnchorPoint(0.8f);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+            }
+        });
+        close = view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slidingUpPanelLayout.setAnchorPoint(0f);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
             }
         });
         swipeRefreshLayout = view.findViewById(R.id.news_fresh);
@@ -102,9 +138,14 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     public void onResume() {
         super.onResume();
         nickName = SaveAccount.getUserInfo(getActivity()).get("nickName");
+        sex = SaveAccount.getUserInfo(getActivity()).get("sex");
+        sign = SaveAccount.getUserInfo(getActivity()).get("sign");
         if(nickName != null) {
-            textView.setText(nickName);
+            nickNameText.setText(nickName);
+            nickNameText2.setText(nickName);
         }
+        if(sex != null) sexText.setText(sex);
+        if(sign != null) signText.setText(sign);
     }
 
     public void attachTab(View view) {
