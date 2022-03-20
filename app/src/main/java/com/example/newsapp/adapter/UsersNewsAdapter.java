@@ -43,7 +43,11 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.Conc
         UsersNews usersNews = usersNewsList.get(position);
         holder.title.setText(usersNews.getTitle());
         holder.time.setText(usersNews.getDate());
-        holder.nickName.setText(SaveAccount.getUserInfo(MyApplication.getContext()).get("nickName"));
+        if(usersNews.getNickName() != null ) {
+            holder.nickName.setText(usersNews.getNickName());
+        } else {
+            holder.nickName.setText(usersNews.getUserName());
+        }
         if(position == usersNewsList.size() - 1) holder.divide.setVisibility(View.GONE);
     }
 

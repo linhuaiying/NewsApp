@@ -2,6 +2,7 @@ package com.example.newsapp.bean.UsersNewsbean;
 
 public class UsersNews {
     private String userName;
+    private String nickName;
     private String newsContent;
     private String date;
     private String title;
@@ -11,6 +12,14 @@ public class UsersNews {
     }
     public String getUserName() {
         return userName;
+    }
+
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public void setNewsContent(String newsContent) {
