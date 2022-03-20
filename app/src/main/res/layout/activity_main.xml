@@ -31,9 +31,7 @@
                         android:layout_height="35dp"
                         android:id="@+id/edittext"
                         android:paddingLeft="10dp"
-                        android:drawableStart="@drawable/search"
                         android:background="#fff"
-                        android:editable="false"
                         android:drawableLeft="@drawable/search"
                         />
 
