@@ -6,7 +6,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/news_fresh">
+        android:id="@+id/news_fresh"
+        android:layout_marginTop="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.newsapp.View.MainView;
+package com.example.newsapp.View.MainView.MyViews;
 
 import com.example.newsapp.View.IBaseView;
 import com.example.newsapp.bean.MyUserbean.MyUser;

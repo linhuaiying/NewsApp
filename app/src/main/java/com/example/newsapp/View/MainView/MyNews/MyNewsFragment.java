@@ -47,7 +47,7 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
                     @Override
                     public void run() {
                         try {
-                            presenter.fetch();
+                            presenter.fetch(SaveAccount.getUserInfo(getActivity()).get("userName"));
                             swipeRefreshLayout.setRefreshing(false);
                         } catch (InterruptedException e) {
                             e.printStackTrace();

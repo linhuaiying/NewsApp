@@ -2,7 +2,7 @@ package com.example.newsapp.Presenter.MyUserPresenter;
 
 import com.example.newsapp.Model.MyUserModels.MyUserModel;
 import com.example.newsapp.Presenter.BasePresenter;
-import com.example.newsapp.View.MainView.IMyView;
+import com.example.newsapp.View.MainView.MyViews.IMyView;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 
 public class MyUserPresenter <T extends IMyView> extends BasePresenter {

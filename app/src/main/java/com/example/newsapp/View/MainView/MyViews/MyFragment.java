@@ -1,8 +1,7 @@
-package com.example.newsapp.View.MainView;
+package com.example.newsapp.View.MainView.MyViews;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.Presenter.MyUserPresenter.MyUserPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
+import com.example.newsapp.View.MainView.BaseFragment;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
+import com.example.newsapp.View.MainView.MyViews.IMyView;
 import com.example.newsapp.adapter.FrgAdapter;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.google.android.material.tabs.TabLayout;
@@ -33,7 +33,6 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     TabLayout tabLayout;
     ViewPager vp;
     String[] titles = new String[]{"全部文章", "收藏"};
-    SwipeRefreshLayout swipeRefreshLayout;
     Button editBtn;
     TextView nickNameText;
     TextView nickNameText2;
@@ -101,34 +100,6 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
             public void onClick(View view) {
                 slidingUpPanelLayout.setAnchorPoint(0f);
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-            }
-        });
-        swipeRefreshLayout = view.findViewById(R.id.news_fresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            fragments.get(vp.getCurrentItem()).presenter.fetch();
-                            swipeRefreshLayout.setRefreshing(false);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(700);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        getActivity().runOnUiThread(runnable);
-                    }
-                }).start();
             }
         });
         return view;

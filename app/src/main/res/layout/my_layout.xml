@@ -121,18 +121,12 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabTextColor="#000"
                 />
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/news_fresh">
 
-                <androidx.viewpager.widget.ViewPager
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/viewpaper">
-                </androidx.viewpager.widget.ViewPager>
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/viewpaper">
+            </androidx.viewpager.widget.ViewPager>
         </LinearLayout>
     </RelativeLayout>
 

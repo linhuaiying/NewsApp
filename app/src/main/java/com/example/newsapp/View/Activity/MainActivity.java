@@ -24,7 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapp.R;
 import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
-import com.example.newsapp.View.MainView.MyFragment;
+import com.example.newsapp.View.MainView.MyViews.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
 import com.example.newsapp.View.PublishView.PublishActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
