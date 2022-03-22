@@ -5,12 +5,17 @@ public class Comment {
     String nickName;
     String content;
     int newsId; //所对应新闻id
+    int id; //该条评论的id
 
     public Comment(String userName, String nickName, String content, int newsId) {
         this.userName = userName;
         this.nickName = nickName;
         this.content = content;
         this.newsId = newsId;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUserName() {

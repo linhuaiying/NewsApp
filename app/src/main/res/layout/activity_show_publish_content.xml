@@ -9,7 +9,7 @@
     android:gravity="bottom"
     sothree:umanoPanelHeight="0dp"
     sothree:umanoShadowHeight="4dp"
-    tools:context=".View.Activity.showPublishContentActivity">
+    tools:context=".View.showPublishContentView.showPublishContentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

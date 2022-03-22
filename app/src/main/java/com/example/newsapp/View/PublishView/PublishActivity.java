@@ -2,7 +2,6 @@ package com.example.newsapp.View.PublishView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -13,7 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -39,25 +37,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
-import com.example.newsapp.Presenter.NewsContentPresenter.NewsContentPresenter;
 import com.example.newsapp.Presenter.PublishPresenter.PublishPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
 import com.example.newsapp.View.Activity.MainActivity;
 import com.example.newsapp.View.BaseActivity;
-import com.example.newsapp.View.IBaseView;
-import com.example.newsapp.View.NewsContentView.INewsContentView;
-import com.example.newsapp.View.Activity.showPublishContentActivity;
 import com.example.newsapp.bean.Userbean.User;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView> implements IPublishView {

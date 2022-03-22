@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import com.example.newsapp.View.IBaseView;
+import com.example.newsapp.bean.Commentbean.Comment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -71,5 +72,11 @@ public class BasePresenter<T extends IBaseView> implements LifecycleObserver { /
     }
 
     public void fetch(List<String> imagPaths) throws InterruptedException {
+    }
+
+    public void fetch(int newsId) throws InterruptedException {
+    }
+
+    public void fetch(Comment comment) throws InterruptedException {
     }
 }

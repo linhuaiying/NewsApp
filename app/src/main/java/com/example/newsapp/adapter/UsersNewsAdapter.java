@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.R;
 import com.example.newsapp.bean.UsersNewsbean.UsersNews;
-import com.example.newsapp.View.Activity.showPublishContentActivity;
+import com.example.newsapp.View.showPublishContentView.showPublishContentActivity;
 
 import java.util.List;
 
