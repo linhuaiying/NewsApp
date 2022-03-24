@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,11 +25,13 @@ public class UsersNewsFragment extends BaseFragment<UsersNewsPresenter, IUsersNe
     RecyclerView recyclerView;
     UsersNewsAdapter usersNewsAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView defaultText;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.users_news_layout, container, false);
         recyclerView = view.findViewById(R.id.usersnewsList);
+        defaultText = view.findViewById(R.id.default_text);
         try {
             presenter.fetch();
         } catch (InterruptedException e) {
@@ -65,6 +69,16 @@ public class UsersNewsFragment extends BaseFragment<UsersNewsPresenter, IUsersNe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            presenter.fetch();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void showErrorMessage(String msg) {
 
     }
@@ -76,6 +90,8 @@ public class UsersNewsFragment extends BaseFragment<UsersNewsPresenter, IUsersNe
 
     @Override
     public void showNewsView(List<UsersNews> usersNewsList) {
+        if(usersNewsList.size() > 0) defaultText.setVisibility(View.GONE);
+        else defaultText.setVisibility(View.VISIBLE);
         usersNewsAdapter = new UsersNewsAdapter(usersNewsList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);

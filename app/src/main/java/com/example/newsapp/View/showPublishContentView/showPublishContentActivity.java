@@ -7,14 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.newsapp.LocalUtils.SaveAccount;
@@ -33,6 +41,7 @@ import java.util.List;
 public class showPublishContentActivity extends BaseActivity<ShowPublishContentPresenter, IShowPublishContentView> implements IShowPublishContentView {
 
     WebView newsWebView;
+    PopupWindow mPopWindow;
     TextView titleTex;
     TextView editText;
     EditText commentText;
@@ -40,6 +49,9 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
     TextView timeText;
     TextView allComments;
     TextView publish;
+    TextView defaultText;
+    Button moreBtn;
+    Button backBtn;
     String data;
     String title;
     String newsNickName;
@@ -61,10 +73,13 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         newsWebView = findViewById(R.id.newscontent);
         newsWebView.getSettings().setJavaScriptEnabled(true);
         newsWebView.setWebViewClient(new WebViewClient());
+        moreBtn = findViewById(R.id.more);
+        backBtn = findViewById(R.id.back);
         titleTex = findViewById(R.id.title);
         nickNameText = findViewById(R.id.nick_name);
         timeText = findViewById(R.id.time);
         allComments = findViewById(R.id.allComments);
+        defaultText = findViewById(R.id.default_text);
         publish = findViewById(R.id.publish);
         data = getIntent().getStringExtra("data");
         title = getIntent().getStringExtra("title");
@@ -95,6 +110,15 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
                 inputMethodManager.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
             }
         });
+        if(!userName.equals(newsUserName)) moreBtn.setVisibility(View.GONE); //非本用户的文章不可操作
+        else {
+            moreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopupWindow();
+                }
+            });
+        }
         recyclerView = findViewById(R.id.recyclerView);
         try {
             presenter.fetch(newsId); //获取评论列表
@@ -120,6 +144,19 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
                 commentText.setText("");
             }
         });
+        allComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slidingUpPanelLayout.setAnchorPoint(1f);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPublishContentActivity.this.finish();
+            }
+        });
     }
 
     @Override
@@ -139,8 +176,9 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
     }
 
     @Override
-    public void showCommments(List<Comment> commentList) throws InterruptedException {
-        Log.d("RegisterModel", String.valueOf(commentList));
+    public void showCommments(List<Comment> commentList) {
+        if(commentList.size() > 0) defaultText.setVisibility(View.GONE);
+        else defaultText.setVisibility(View.VISIBLE);
         this.commentList = commentList;
         commentAdapter = new CommentAdapter(this.commentList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -153,13 +191,67 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         Log.d("RegisterModel", msg);
         if(msg.equals("success")) {
             MyToast.toast("评论成功！");
+            defaultText.setVisibility(View.GONE);
         } else {
             MyToast.toast("评论失败, 请检查网络设置");
         }
     }
 
     @Override
+    public void showDeleteMsg(String msg) {
+        if(msg.equals("success")) {
+            MyToast.toast("删除成功！");
+            showPublishContentActivity.this.finish();
+        } else {
+            MyToast.toast("删除失败, 请检查网络设置");
+        }
+    }
+
+    @Override
     public void showErrorMessage(String msg) {
 
+    }
+
+    private void showPopupWindow() {
+        //设置contentView
+        View contentView = LayoutInflater.from(this).inflate(R.layout.delete_layout, null);
+        mPopWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setContentView(contentView);
+        //显示PopupWindow
+        View rootview = LayoutInflater.from(this).inflate(R.layout.activity_show_publish_content, null);
+        mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp=getWindow().getAttributes();
+                lp.alpha=1.0f;
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(lp);
+            }
+        });
+        WindowManager.LayoutParams lp=getWindow().getAttributes();
+        lp.alpha=0.5f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setAttributes(lp);
+        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        TextView delete = contentView.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    presenter.deleteNews(newsId);
+                    mPopWindow.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        TextView cancel = contentView.findViewById(R.id.cancel);
+         cancel.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 mPopWindow.dismiss();
+             }
+         });
     }
 }

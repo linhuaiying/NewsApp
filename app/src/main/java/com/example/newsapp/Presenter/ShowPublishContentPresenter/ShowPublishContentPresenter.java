@@ -45,4 +45,21 @@ public class ShowPublishContentPresenter<T extends IShowPublishContentView> exte
             });
         }
     }
+
+    public void deleteNews(int newsId) throws InterruptedException {
+        showPublishContentModel = new ShowPublishContentModel(null, newsId);
+        if (iView.get() != null && showPublishContentModel != null) {
+            showPublishContentModel.deletNews(new ShowPublishContentModel.OnSendListener() {
+                @Override
+                public void onComplete(String msg) {
+                    ((IShowPublishContentView)iView.get()).showDeleteMsg(msg); //从model层获取数据，给view传递用户信息
+                }
+
+                @Override
+                public void onError(String msg) {
+
+                }
+            });
+        }
+    }
 }

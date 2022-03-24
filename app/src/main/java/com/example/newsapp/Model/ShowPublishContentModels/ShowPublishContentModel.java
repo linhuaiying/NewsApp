@@ -2,6 +2,7 @@ package com.example.newsapp.Model.ShowPublishContentModels;
 
 import com.example.newsapp.LocalUtils.UrlConfig;
 import com.example.newsapp.Service.CommentService;
+import com.example.newsapp.Service.UsersNewsService;
 import com.example.newsapp.bean.Commentbean.Comment;
 import com.google.gson.Gson;
 
@@ -28,6 +29,9 @@ public class ShowPublishContentModel {
     }
     public void loadComment(OnSendListener onSendListener) throws InterruptedException {
         onSendListener.onComplete(sendComment(comment));
+    }
+    public void deletNews(OnSendListener onSendListener) throws InterruptedException {
+        onSendListener.onComplete(deleteNews(newsId));
     }
     public interface OnLoadListener{ //判断数据是否成功接收
         void onComplete(List<Comment> commentList) throws InterruptedException; //成功了就拿到数据
@@ -85,5 +89,28 @@ public class ShowPublishContentModel {
         thread.start();
         thread.join();
         return commentList[0];
+    }
+    public String deleteNews(int newsId) throws InterruptedException {
+        final String[] msg = new String[1];
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
+                .build();
+        UsersNewsService usersNewsService = retrofit.create(UsersNewsService.class);
+        Call<ResponseBody> call = usersNewsService.deleteNews(newsId);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response<ResponseBody> response = call.execute();
+                    msg[0] = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        thread.join();
+        return msg[0];
     }
 }
