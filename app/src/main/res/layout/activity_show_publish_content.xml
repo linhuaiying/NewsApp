@@ -96,19 +96,46 @@
             android:orientation="horizontal"
             android:padding="10dp"
             android:background="#fff">
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_weight="1"
-                android:id="@+id/edittext"
-                android:background="#fff"
-                android:text="写下你的评论..."
-                android:textSize="18sp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#F5F5F5"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edittext"
+                    android:text="写下你的评论..."
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/happy"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="100dp"/>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/fav"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/cancel_fav"
+                android:layout_marginLeft="50dp"
                 />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/happy"/>
+            <Button
+                android:id="@+id/like"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/unlike"
+                android:layout_marginLeft="10dp"
+                />
         </LinearLayout>
 
     </LinearLayout>

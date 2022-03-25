@@ -52,6 +52,8 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
     TextView defaultText;
     Button moreBtn;
     Button backBtn;
+    Button favBtn;
+    Button likeBtn;
     String data;
     String title;
     String newsNickName;
@@ -60,6 +62,8 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
     String userName;
     String nickName;
     int newsId;
+    boolean isFav = false;
+    boolean isLike = false;
     SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
     CommentAdapter commentAdapter;
@@ -75,6 +79,8 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         newsWebView.setWebViewClient(new WebViewClient());
         moreBtn = findViewById(R.id.more);
         backBtn = findViewById(R.id.back);
+        favBtn = findViewById(R.id.fav);
+        likeBtn = findViewById(R.id.like);
         titleTex = findViewById(R.id.title);
         nickNameText = findViewById(R.id.nick_name);
         timeText = findViewById(R.id.time);
@@ -122,6 +128,7 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         recyclerView = findViewById(R.id.recyclerView);
         try {
             presenter.fetch(newsId); //获取评论列表
+            presenter.getFav(userName, newsId); //初始化该条新闻的收藏状态
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -155,6 +162,27 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
             @Override
             public void onClick(View view) {
                 showPublishContentActivity.this.finish();
+            }
+        });
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                   if(!isFav) {
+                       presenter.addFavNews(userName, newsId);
+                   } else {
+                       presenter.deleteFavNews(userName, newsId);
+                   }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isLike) likeBtn.setBackgroundResource(R.drawable.like);
+                else likeBtn.setBackgroundResource(R.drawable.unlike);
             }
         });
     }
@@ -204,6 +232,36 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
             showPublishContentActivity.this.finish();
         } else {
             MyToast.toast("删除失败, 请检查网络设置");
+        }
+    }
+
+    //初始化fav
+    @Override
+    public void showFav(String msg) {
+        if(msg.equals("success")) {
+            isFav = true;
+            favBtn.setBackgroundResource(R.drawable.fav);
+        } else {
+            isFav = false;
+            favBtn.setBackgroundResource(R.drawable.cancel_fav);
+        }
+    }
+
+    //设置fav
+    @Override
+    public void setFav(String msg) {
+        if(msg.equals("success")) {
+           if(isFav) {
+               favBtn.setBackgroundResource(R.drawable.cancel_fav);
+               isFav = false;
+               MyToast.toast("取消收藏");
+           } else {
+               favBtn.setBackgroundResource(R.drawable.fav);
+               isFav = true;
+               MyToast.toast("收藏成功！");
+           }
+        } else {
+
         }
     }
 

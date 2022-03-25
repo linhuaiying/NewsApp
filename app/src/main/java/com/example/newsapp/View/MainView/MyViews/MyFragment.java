@@ -18,6 +18,7 @@ import com.example.newsapp.Presenter.MyUserPresenter.MyUserPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.BaseFragment;
+import com.example.newsapp.View.MainView.MyFavNews.MyFavNewsFragment;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
 import com.example.newsapp.View.MainView.MyViews.IMyView;
 import com.example.newsapp.adapter.FrgAdapter;
@@ -122,7 +123,7 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     public void attachTab(View view) {
         //构造适配器
         fragments.add(new MyNewsFragment());
-        fragments.add(new MyNewsFragment());
+        fragments.add(new MyFavNewsFragment());
         FrgAdapter adapter = new FrgAdapter(getChildFragmentManager(), fragments); //要用childFragmentManager，不然显示不出来
 
         //设定适配器

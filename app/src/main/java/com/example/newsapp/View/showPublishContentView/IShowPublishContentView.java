@@ -9,4 +9,6 @@ public interface IShowPublishContentView extends IBaseView {
     void showCommments(List<Comment> commentList) throws InterruptedException; //返回评论列表
     void showSuccessMsg(String msg); //上传评论后返回的信息
     void showDeleteMsg(String msg); //删除新闻后返回的信息
+    void showFav(String msg);
+    void setFav(String msg);
 }

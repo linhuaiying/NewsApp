@@ -23,4 +23,7 @@ public interface UsersNewsService {
     @POST("news/deleteNews") //必须用post请求
     @FormUrlEncoded
     Call<ResponseBody> deleteNews(@Field("newsId") int newsId);
+
+    @GET("news/getFavNewsList")
+    Call<List<UsersNews>> getFavNewsList(@Query("username") String username);
 }
