@@ -1,6 +1,8 @@
 package com.example.newsapp.bean.MyUserbean;
 
-public class MyUser {
+import java.io.Serializable;
+
+public class MyUser implements Serializable {
     String userName;
     String passWord;
     String nickName;

@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.EditInfoView.EditiInfoActivity"></activity>
+        <activity android:name=".View.HisView.HisActivity"></activity>
+        <activity android:name=".View.EditInfoView.EditiInfoActivity" />
         <activity android:name=".View.showPublishContentView.showPublishContentActivity" />
         <activity android:name=".View.PublishView.PublishActivity" />
         <activity android:name=".View.NewsContentView.NewsContentActivity" />

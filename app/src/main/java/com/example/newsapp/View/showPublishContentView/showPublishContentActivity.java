@@ -29,19 +29,26 @@ import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.Presenter.ShowPublishContentPresenter.ShowPublishContentPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.Toast.MyToast;
+import com.example.newsapp.View.Activity.MainActivity;
 import com.example.newsapp.View.BaseActivity;
+import com.example.newsapp.View.HisView.HisActivity;
 import com.example.newsapp.adapter.CommentAdapter;
 import com.example.newsapp.bean.Commentbean.Comment;
+import com.example.newsapp.bean.MyUserbean.MyUser;
+import com.example.newsapp.bean.Userbean.User;
 import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class showPublishContentActivity extends BaseActivity<ShowPublishContentPresenter, IShowPublishContentView> implements IShowPublishContentView {
 
     WebView newsWebView;
     PopupWindow mPopWindow;
+    CircleImageView circleImageView;
     TextView titleTex;
     TextView editText;
     EditText commentText;
@@ -77,6 +84,7 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         newsWebView = findViewById(R.id.newscontent);
         newsWebView.getSettings().setJavaScriptEnabled(true);
         newsWebView.setWebViewClient(new WebViewClient());
+        circleImageView = findViewById(R.id.user_icon);
         moreBtn = findViewById(R.id.more);
         backBtn = findViewById(R.id.back);
         favBtn = findViewById(R.id.fav);
@@ -114,6 +122,20 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
                 commentText.requestFocus();
                 InputMethodManager inputMethodManager = (InputMethodManager) commentText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+        });
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyUser myUser = new MyUser();
+                myUser.setUserName(newsUserName);
+                myUser.setNickName(newsNickName);
+                if(!newsUserName.equals(userName)) HisActivity.actionStart(showPublishContentActivity.this, myUser);
+                else {
+                    User user = new User();
+                    user.setUsername(userName);
+                    MainActivity.actionStart(showPublishContentActivity.this, user, 2);
+                }
             }
         });
         if(!userName.equals(newsUserName)) moreBtn.setVisibility(View.GONE); //非本用户的文章不可操作

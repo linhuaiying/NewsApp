@@ -251,7 +251,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
         //showPublishContentActivity.actionStart(this, msg);
         if(msg.equals("success")) {
             createProgressBar();
-            MainActivity.actionStart(this, user);
+            MainActivity.actionStart(this, user, 0);
             this.finish();
         } else {
             MyToast.toast("发布失败，请检查网络！");

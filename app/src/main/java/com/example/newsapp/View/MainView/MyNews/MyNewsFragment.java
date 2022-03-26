@@ -30,6 +30,10 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
     UsersNewsAdapter usersNewsAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView defaultText;
+    String userName;
+    public MyNewsFragment(String userName) {
+        this.userName = userName;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
         recyclerView = view.findViewById(R.id.usersnewsList);
         defaultText = view.findViewById(R.id.default_text);
         try {
-            presenter.fetch(SaveAccount.getUserInfo(getActivity()).get("userName"));
+            presenter.fetch(userName);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -49,7 +53,7 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
                     @Override
                     public void run() {
                         try {
-                            presenter.fetch(SaveAccount.getUserInfo(getActivity()).get("userName"));
+                            presenter.fetch(userName);
                             swipeRefreshLayout.setRefreshing(false);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -76,7 +80,7 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
     public void onResume() {
         super.onResume();
         try {
-            presenter.fetch(SaveAccount.getUserInfo(getActivity()).get("userName"));
+            presenter.fetch(userName);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

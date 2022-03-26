@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
             User user = new User();
             user.setUsername(phone);
             user.setPassword(password);
-            MainActivity.actionStart(this, user);
+            MainActivity.actionStart(this, user, 0);
             this.finish();
         }
         init();
@@ -181,7 +181,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
             //保存用户信息到本地
             if(!isLogined()) SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
             createProgressBar();
-            MainActivity.actionStart(this, user);
+            MainActivity.actionStart(this, user, 0);
             this.finish();
         }
 

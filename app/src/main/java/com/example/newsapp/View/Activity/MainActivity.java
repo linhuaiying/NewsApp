@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     List<Fragment> fragments = new ArrayList<>();
     User user;
+    int fragmentID = 0;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setStatusBarColor(Color.BLACK);
         user = (User) getIntent().getSerializableExtra("user"); //将实体类解析出来
+        fragmentID = getIntent().getIntExtra("fragmentID", 0);
         init();
         //测试servlet
         /*
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
          */
+        viewPager.setCurrentItem(fragmentID);
+        if(fragmentID == 2) bottomNavigationView.setSelectedItemId(R.id.item_my);
     }
 
     
@@ -149,9 +153,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public static void actionStart(Context context, User user) {
+    public static void actionStart(Context context, User user, int fragmentID) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("user", user);
+        intent.putExtra("fragmentID", fragmentID);
         context.startActivity(intent);
     }
 

@@ -53,7 +53,6 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.my_layout, container, false);
-        attachTab(view);
         slidingUpPanelLayout = view.findViewById(R.id.sliding_layout);
         nickNameText = view.findViewById(R.id.nick_name);
         nickNameText2 = view.findViewById(R.id.nick_name_2);
@@ -66,6 +65,7 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
         sex = SaveAccount.getUserInfo(container.getContext()).get("sex");
         sign = SaveAccount.getUserInfo(container.getContext()).get("sign");
         userName = SaveAccount.getUserInfo(container.getContext()).get("userName");
+        attachTab(view);
         userNameText.setText(userName);
         //如果本地没有缓存就从服务器获取
         if(nickName != null) {
@@ -122,7 +122,7 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
 
     public void attachTab(View view) {
         //构造适配器
-        fragments.add(new MyNewsFragment());
+        fragments.add(new MyNewsFragment(userName));
         fragments.add(new MyFavNewsFragment());
         FrgAdapter adapter = new FrgAdapter(getChildFragmentManager(), fragments); //要用childFragmentManager，不然显示不出来
 
