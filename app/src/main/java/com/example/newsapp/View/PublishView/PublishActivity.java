@@ -89,7 +89,13 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
         photos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SelectImg();
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                    if (ActivityCompat.checkSelfPermission(PublishActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PublishActivity.this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+                    } else {
+                        SelectImg();
+                    }
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -108,11 +114,6 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
                 }
             }
         });
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
-            }
-        }
     }
 
     @Override
@@ -124,8 +125,8 @@ public class PublishActivity extends BaseActivity<PublishPresenter, IPublishView
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                Log.i("MainActivity", "申请的权限为：" + permissions[i] + ",申请结果：" + grantResults[i]);
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SelectImg();
             }
         }
     }

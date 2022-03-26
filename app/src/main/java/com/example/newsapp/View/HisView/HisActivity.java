@@ -91,6 +91,11 @@ public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implemen
     }
 
     @Override
+    public void showImagUrl(String imagUrl) {
+
+    }
+
+    @Override
     public void showErrorMessage(String msg) {
 
     }
