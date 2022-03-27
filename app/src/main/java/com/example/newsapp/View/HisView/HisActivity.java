@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.newsapp.Presenter.MyUserPresenter.MyUserPresenter;
 import com.example.newsapp.R;
 import com.example.newsapp.View.BaseActivity;
@@ -20,6 +21,8 @@ import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.example.newsapp.bean.Userbean.User;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implements IMyView {
     MyUser myUser;
     TextView nickNameText;
@@ -27,9 +30,12 @@ public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implemen
     TextView sexText;
     TextView signText;
     TextView moreInfoText;
+    CircleImageView circleImageView;
+    CircleImageView circleImageView2;
     String nickName;
     String sex;
     String sign;
+    String userIcon;
     SlidingUpPanelLayout slidingUpPanelLayout;
     TextView close;
     FrameLayout frameLayout;
@@ -43,6 +49,8 @@ public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implemen
         nickNameText2 = findViewById(R.id.nick_name_2);
         sexText = findViewById(R.id.sex_text);
         signText = findViewById(R.id.sign);
+        circleImageView = findViewById(R.id.user_icon);
+        circleImageView2 = findViewById(R.id.user_icon_2);
         moreInfoText = findViewById(R.id.moreInfo);
         frameLayout = findViewById(R.id.newsFrameLayout);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -82,17 +90,17 @@ public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implemen
        nickName = myUser.getNickName();
        sex = myUser.getSex();
        sign = myUser.getSign();
+       userIcon = myUser.getUserIcon();
        if(nickName != null) {
            nickNameText.setText(nickName);
            nickNameText2.setText(nickName);
        }
        if(sex != null) sexText.setText(sex);
        if(sign != null) signText.setText(sign);
-    }
-
-    @Override
-    public void showImagUrl(String imagUrl) {
-
+       if(userIcon != null) {
+           Glide.with(this).load(userIcon).into(circleImageView);
+           Glide.with(this).load(userIcon).into(circleImageView2);
+       }
     }
 
     @Override

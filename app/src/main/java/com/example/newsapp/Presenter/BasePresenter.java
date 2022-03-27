@@ -57,7 +57,7 @@ public class BasePresenter<T extends IBaseView> implements LifecycleObserver { /
    public void fetch() throws InterruptedException {
    }
 
-   public void fetch(String a, String b, String c, String d) throws InterruptedException {
+   public void fetch(String a, String b, String c, String d, String e) throws InterruptedException {
 
    }
 

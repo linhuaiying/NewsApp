@@ -8,8 +8,8 @@ public class EditInfoPresenter<T extends IEditInfoView> extends BasePresenter {
     EditInfoModel editInfoModel;
 
     @Override
-    public void fetch(String userName, String nickName, String sex, String sign) throws InterruptedException {
-        editInfoModel = new EditInfoModel(userName, nickName, sex, sign);
+    public void fetch(String userName, String nickName, String sex, String sign, String imagUrl) throws InterruptedException {
+        editInfoModel = new EditInfoModel(userName, nickName, sex, sign, imagUrl);
         if(iView.get() != null && editInfoModel != null) {
             editInfoModel.loadUserData(new EditInfoModel.OnLoadListener() {
                 @Override

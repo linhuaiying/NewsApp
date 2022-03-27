@@ -25,7 +25,7 @@ public interface UserService {
 
     @POST("user/update") //必须用post请求
     @FormUrlEncoded
-    Call<ResponseBody> updateUser(@Field("username") String username, @Field("nickname") String nickName, @Field("sex") String sex, @Field("sign") String sign);
+    Call<ResponseBody> updateUser(@Field("username") String username, @Field("nickname") String nickName, @Field("sex") String sex, @Field("sign") String sign, @Field("userIcon") String userIcon);
 
     @POST("user/get") //必须用post请求
     @FormUrlEncoded

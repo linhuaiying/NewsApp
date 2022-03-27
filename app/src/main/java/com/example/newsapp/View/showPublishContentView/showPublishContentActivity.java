@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.Presenter.ShowPublishContentPresenter.ShowPublishContentPresenter;
 import com.example.newsapp.R;
@@ -65,9 +66,11 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
     String title;
     String newsNickName;
     String newsUserName;
+    String newsUserIcon;
     String time;
     String userName;
     String nickName;
+    String userIcon;
     int newsId;
     boolean isFav = false;
     boolean isLike = false;
@@ -100,9 +103,11 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         time = getIntent().getStringExtra("time");
         newsNickName = getIntent().getStringExtra("nickName");
         newsUserName = getIntent().getStringExtra("userName");
+        newsUserIcon = getIntent().getStringExtra("userIcon");
         newsId = getIntent().getIntExtra("newsId", -1);
         userName = SaveAccount.getUserInfo(this).get("userName");
         nickName = SaveAccount.getUserInfo(this).get("nickName");
+        userIcon = SaveAccount.getUserInfo(this).get("userIcon");
         titleTex.setText(title);
         if(newsNickName != null) {
             nickNameText.setText(newsNickName);
@@ -110,6 +115,7 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
             nickNameText.setText(newsUserName);
         }
         timeText.setText(time);
+        if(newsUserIcon != null) Glide.with(this).load(newsUserIcon).into(circleImageView);
         newsWebView.loadDataWithBaseURL(null, data, "text/html" , "utf-8", null);
         slidingUpPanelLayout = findViewById(R.id.sliding_layout);
         commentText = findViewById(R.id.comment);
@@ -157,7 +163,7 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Comment comment = new Comment(userName, nickName, commentText.getText().toString(), newsId);
+                Comment comment = new Comment(userName, nickName, commentText.getText().toString(), newsId, userIcon);
                 try {
                     presenter.fetch(comment); //上传评论
                 } catch (InterruptedException e) {
@@ -222,6 +228,7 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         intent.putExtra("userName", usersNews.getUserName());
         intent.putExtra("time", usersNews.getDate());
         intent.putExtra("newsId", usersNews.getId());
+        intent.putExtra("userIcon", usersNews.getUserIcon());
         context.startActivity(intent);
     }
 

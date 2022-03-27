@@ -21,23 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyUserModel {
     String userName = "";
-    String imagPath = "";
-    public MyUserModel(String userName, String imagPath) {
+    public MyUserModel(String userName) {
         this.userName = userName;
-        this.imagPath = imagPath;
     }
     public void loadUserData(MyUserModel.OnLoadListener onLoadListener) throws InterruptedException {
         onLoadListener.onComplete(getData());
     }
-    public void loadImagUrl(MyUserModel.OnSendListener onSendListener) throws InterruptedException {
-        onSendListener.onComplete(getImagUrl(imagPath, userName));
-    }
     public interface OnLoadListener{ //判断数据是否成功接收
         void onComplete(MyUser myUser); //成功了就拿到数据
-        void onError(String msg);
-    }
-    public interface OnSendListener{
-        void onComplete(String imagUrl); //成功了就拿到数据
         void onError(String msg);
     }
     //该方法想象成数据是从网络或者数据库或者服务、、、地方来的
@@ -63,35 +54,5 @@ public class MyUserModel {
         thread.start();
         thread.join();
         return myUser[0];
-    }
-    public String getImagUrl(String imagPath, String userName) throws InterruptedException {
-        final String[] imagUrl = new String[1];
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);//表单类型
-        File file = new File(imagPath);//filePath 图片地址
-        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        builder.addFormDataPart("file", file.getName(), imageBody);
-        builder.addFormDataPart("username", userName);
-        List<MultipartBody.Part> parts = builder.build().parts();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlConfig.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
-                .build();
-        PublishService publishService = retrofit.create(PublishService.class); //Retrofit将这个接口进行实现
-        Call<ResponseBody> call = publishService.uploadImag(parts);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response<ResponseBody> response = call.execute();
-                    imagUrl[0] = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-        thread.join();
-        return imagUrl[0];
     }
 }

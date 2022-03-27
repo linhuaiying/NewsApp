@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.newsapp.Application.MyApplication;
 import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.R;
@@ -65,6 +66,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                 }
             }
         });
+         if(comment.getUserIcon() != null) Glide.with(context).load(comment.getUserIcon()).into(holder.circleImageView);
     }
 
     @Override

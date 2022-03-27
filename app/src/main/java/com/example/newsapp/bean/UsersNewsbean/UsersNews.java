@@ -6,6 +6,7 @@ public class UsersNews {
     private String newsContent;
     private String date;
     private String title;
+    private String userIcon;
     private int id;
     public void setUserName(String userName) {
         this.userName = userName;
@@ -42,6 +43,14 @@ public class UsersNews {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUserIcon() {
+        return this.userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
     }
 
     public void setId(int id) {

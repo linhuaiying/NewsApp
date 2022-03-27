@@ -8,6 +8,15 @@ public class MyUser implements Serializable {
     String nickName;
     String sex;
     String sign;
+    String userIcon;
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
 
     public String getUserName() {
         return this.userName;

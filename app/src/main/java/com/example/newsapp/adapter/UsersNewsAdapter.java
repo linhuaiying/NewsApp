@@ -1,5 +1,6 @@
 package com.example.newsapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +9,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.newsapp.R;
 import com.example.newsapp.bean.UsersNewsbean.UsersNews;
 import com.example.newsapp.View.showPublishContentView.showPublishContentActivity;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.UsersNewsViewHolder> {
     private List<UsersNews> usersNewsList;
+    private Context context;
 
     public UsersNewsAdapter(List<UsersNews> usersNewsList) {
         this.usersNewsList = usersNewsList;
     }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.context = recyclerView.getContext();
+    }
+
     @NonNull
     @Override
     public UsersNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,6 +58,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
             holder.nickName.setText(usersNews.getUserName());
         }
         if(position == usersNewsList.size() - 1) holder.divide.setVisibility(View.GONE);
+        if(usersNews.getUserIcon() != null) Glide.with(context).load(usersNews.getUserIcon()).into(holder.circleImageView);
     }
 
     @Override
@@ -59,6 +72,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
         TextView title;
         TextView time;
         TextView nickName;
+        CircleImageView circleImageView;
         View divide;
         public UsersNewsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +81,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
             time = itemView.findViewById(R.id.time);
             divide = itemView.findViewById(R.id.divide);
             nickName = itemView.findViewById(R.id.nick_name);
+            circleImageView = itemView.findViewById(R.id.user_icon);
         }
 
     }
