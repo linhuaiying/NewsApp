@@ -31,18 +31,13 @@ public class MyNewsFragment extends BaseFragment<MyNewsPresenter, IMyNewsView> i
     SwipeRefreshLayout swipeRefreshLayout;
     TextView defaultText;
     String userName;
-    public MyNewsFragment(String userName) {
-        this.userName = userName;
-    }
-    public MyNewsFragment() {
-        this.userName = SaveAccount.getUserInfo(getActivity()).get("userName");
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.users_news_layout, container, false);
         recyclerView = view.findViewById(R.id.usersnewsList);
         defaultText = view.findViewById(R.id.default_text);
+        userName = this.getArguments().getString("userName");
         try {
             presenter.fetch(userName);
         } catch (InterruptedException e) {

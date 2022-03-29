@@ -50,5 +50,6 @@ public class SaveAccount {
          SharedPreferences sp=context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
          SharedPreferences.Editor editor=sp.edit();
          editor.clear();
+         editor.commit();
      }
 }

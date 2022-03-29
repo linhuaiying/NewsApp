@@ -2,6 +2,7 @@ package com.example.newsapp.View.MainView.MyViews;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.google.android.material.tabs.TabLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,8 +142,12 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     }
 
     public void attachTab(View view) {
+        MyNewsFragment myNewsFragment = new MyNewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("userName", userName);
+        myNewsFragment.setArguments(bundle);
         //构造适配器
-        fragments.add(new MyNewsFragment(userName));
+        fragments.add(myNewsFragment);
         fragments.add(new MyFavNewsFragment());
         FrgAdapter adapter = new FrgAdapter(getChildFragmentManager(), fragments); //要用childFragmentManager，不然显示不出来
 
@@ -205,5 +213,8 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     @Override
     public void showMyUser(MyUser myUser) {
         SaveAccount.saveExtraUserInfo(getActivity(), myUser.getNickName(), myUser.getSex(), myUser.getSign(), myUser.getUserIcon());
+        Message message = new Message();
+        message.what = 100;
+        EventBus.getDefault().post(message);
     }
 }

@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,19 +26,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.R;
 import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.View.MainView.MyViews.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
 import com.example.newsapp.View.PublishView.PublishActivity;
 import com.example.newsapp.View.SearchView.SearchActivity;
+import com.example.newsapp.View.UserView.LoginActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
 import com.example.newsapp.bean.Userbean.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
     List<Fragment> fragments = new ArrayList<>();
     User user;
     int fragmentID = 0;
+    String nickName;
+    String sign;
+    String userIcon;
+    TextView nickNameText;
+    TextView signText;
+    CircleImageView circleImageView;
+    View headerView;
+    Button loginOutBtn;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +78,62 @@ public class MainActivity extends AppCompatActivity {
         init();
         viewPager.setCurrentItem(fragmentID);
         if(fragmentID == 2) bottomNavigationView.setSelectedItemId(R.id.item_my);
+        EventBus.getDefault().register(this);
     }
 
-    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        nickName = SaveAccount.getUserInfo(this).get("nickName");
+        sign = SaveAccount.getUserInfo(this).get("sign");
+        userIcon = SaveAccount.getUserInfo(this).get("userIcon");
+        nickNameText = headerView.findViewById(R.id.nick_name);
+        if(nickName != null) nickNameText.setText(nickName);
+        signText = headerView.findViewById(R.id.sign);
+        if(sign != null && !sign.equals("")) signText.setText(sign);
+        circleImageView = headerView.findViewById(R.id.user_icon);
+        if(userIcon != null) Glide.with(this).load(userIcon).into(circleImageView);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Message msg) {
+        if(msg.what == 100) {
+            nickName = SaveAccount.getUserInfo(this).get("nickName");
+            sign = SaveAccount.getUserInfo(this).get("sign");
+            userIcon = SaveAccount.getUserInfo(this).get("userIcon");
+            nickNameText = headerView.findViewById(R.id.nick_name);
+            if(nickName != null) nickNameText.setText(nickName);
+            signText = headerView.findViewById(R.id.sign);
+            if(sign != null && !sign.equals("")) signText.setText(sign);
+            circleImageView = headerView.findViewById(R.id.user_icon);
+            if(userIcon != null) Glide.with(this).load(userIcon).into(circleImageView);
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     public void init() {
+        nickName = SaveAccount.getUserInfo(this).get("nickName");
+        sign = SaveAccount.getUserInfo(this).get("sign");
+        userIcon = SaveAccount.getUserInfo(this).get("userIcon");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-        TextView phoneText = headerView.findViewById(R.id.username);
-        phoneText.setText(user.getUsername());
+        headerView = navigationView.getHeaderView(0);
+        nickNameText = headerView.findViewById(R.id.nick_name);
+        if(nickName != null) nickNameText.setText(nickName);
+        signText = headerView.findViewById(R.id.sign);
+        if(sign != null && !sign.equals("")) signText.setText(sign);
+        circleImageView = headerView.findViewById(R.id.user_icon);
+        if(userIcon != null) Glide.with(this).load(userIcon).into(circleImageView);
+        loginOutBtn = navigationView.findViewById(R.id.login_out);
+        loginOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SaveAccount.deleteUserInfo(MainActivity.this);
+                LoginActivity.actionStart(MainActivity.this);
+            }
+        });
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

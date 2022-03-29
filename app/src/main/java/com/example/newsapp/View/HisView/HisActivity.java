@@ -55,7 +55,11 @@ public class HisActivity extends BaseActivity<MyUserPresenter, IMyView> implemen
         frameLayout = findViewById(R.id.newsFrameLayout);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.newsFrameLayout, new MyNewsFragment(myUser.getUserName()));
+        MyNewsFragment myNewsFragment = new MyNewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("userName", myUser.getUserName());
+        myNewsFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.newsFrameLayout, myNewsFragment);
         fragmentTransaction.commit();
         if(myUser.getNickName() != null) nickNameText.setText(myUser.getNickName());
         else nickNameText.setText(myUser.getUserName());

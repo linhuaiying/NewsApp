@@ -105,13 +105,15 @@
             android:textColor="@color/colorGray"
             android:textSize="14sp"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="110dp"
+            android:layout_below="@+id/nick_name"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="144dp">
+            android:layout_below="@+id/moreInfo"
+            android:layout_marginTop="12dp">
             <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

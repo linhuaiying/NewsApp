@@ -6,30 +6,28 @@
     android:background="?attr/colorPrimary">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon"
+        android:id="@+id/user_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/icon"
+        android:src="@drawable/login"
         android:layout_centerInParent="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
+        android:id="@+id/nick_name"
         android:textSize="14sp"
         android:text="Tony"
         android:textColor="#FFF"
-        android:layout_alignParentBottom="true"/>
+        android:layout_above="@+id/sign"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/username"
-        android:text="tony@gmail.com"
+        android:text="这个人很懒，什么也没写"
         android:textColor="#FFF"
         android:textSize="14sp"
-        android:id="@+id/mail"/>
-
-
+        android:id="@+id/sign"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
