@@ -26,4 +26,7 @@ public interface UsersNewsService {
 
     @GET("news/getFavNewsList")
     Call<List<UsersNews>> getFavNewsList(@Query("username") String username);
+
+    @GET("news/getSearchNewsList")
+    Call<List<UsersNews>> getSearchNewsList(@Query("keywords") String keywords);
 }

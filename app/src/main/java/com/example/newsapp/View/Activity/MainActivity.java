@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.View.MainView.MyViews.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
 import com.example.newsapp.View.PublishView.PublishActivity;
+import com.example.newsapp.View.SearchView.SearchActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
 import com.example.newsapp.bean.Userbean.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
+    EditText editText;
     List<Fragment> fragments = new ArrayList<>();
     User user;
     int fragmentID = 0;
@@ -52,27 +55,6 @@ public class MainActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("user"); //将实体类解析出来
         fragmentID = getIntent().getIntExtra("fragmentID", 0);
         init();
-        //测试servlet
-        /*
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8080/j2ee/getOneServlet")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("kww",call.toString());
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){//回调的方法执行在子线程。
-                    Log.d("kww","获取数据成功了");
-                    Log.d("kww","response.code()=="+response.code());
-                    Log.d("kww","response.body().string()=="+response.body().string());
-                }
-            }
-        });
-         */
         viewPager.setCurrentItem(fragmentID);
         if(fragmentID == 2) bottomNavigationView.setSelectedItemId(R.id.item_my);
     }
@@ -133,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        editText = findViewById(R.id.serch);
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchActivity.actionStart(MainActivity.this);
+            }
+        });
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

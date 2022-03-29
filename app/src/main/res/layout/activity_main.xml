@@ -29,10 +29,12 @@
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:id="@+id/edittext"
+                        android:id="@+id/serch"
                         android:paddingLeft="10dp"
+                        android:hint="                      "
                         android:background="#fff"
                         android:drawableLeft="@drawable/search"
+                        android:editable="false"
                         />
 
                 </androidx.cardview.widget.CardView>

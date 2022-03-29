@@ -37,7 +37,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
     public UsersNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.users_news_item_layout, parent, false);
         UsersNewsViewHolder usersNewsViewHolder = new UsersNewsViewHolder(view);
-        usersNewsViewHolder.concernNewsView.setOnClickListener(new View.OnClickListener() {
+        usersNewsViewHolder.userNewsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = usersNewsViewHolder.getAdapterPosition();
@@ -68,7 +68,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
 
     static class UsersNewsViewHolder extends RecyclerView.ViewHolder{
 
-        View concernNewsView;
+        View userNewsView;
         TextView title;
         TextView time;
         TextView nickName;
@@ -76,7 +76,7 @@ public class UsersNewsAdapter extends RecyclerView.Adapter<UsersNewsAdapter.User
         View divide;
         public UsersNewsViewHolder(@NonNull View itemView) {
             super(itemView);
-            concernNewsView = itemView;
+            userNewsView = itemView;
             title = itemView.findViewById(R.id.title);
             time = itemView.findViewById(R.id.time);
             divide = itemView.findViewById(R.id.divide);
