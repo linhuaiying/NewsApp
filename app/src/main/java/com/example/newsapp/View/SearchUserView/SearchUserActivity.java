@@ -120,23 +120,27 @@ public class SearchUserActivity extends BaseActivity<SearchUserPresenter, ISearc
     public void showMyUser(Map<String, List<MyUser>> map) {
         List<MyUser> concernUsers = map.get("concern");
         List<MyUser> noconcernUsers = map.get("noconcern");
-        if(concernUsers.size() > 0) {
+        if(concernUsers != null && concernUsers.size() > 0) {
             defaultText.setVisibility(View.GONE);
             myConcernUserAdapter = new MyConcernUserAdapter(concernUsers);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             concernRecyclerView.setLayoutManager(linearLayoutManager);
             concernRecyclerView.setAdapter(myConcernUserAdapter);
             concernRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            concernRecyclerView.setVisibility(View.GONE);
         }
-        if(noconcernUsers.size() > 0) {
+        if(noconcernUsers != null && noconcernUsers.size() > 0) {
             defaultText.setVisibility(View.GONE);
             searchAdapter = new SearchUserAdapter(noconcernUsers);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             noconcernRecyclerView.setLayoutManager(linearLayoutManager);
             noconcernRecyclerView.setAdapter(searchAdapter);
             noconcernRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            noconcernRecyclerView.setVisibility(View.GONE);
         }
-        if(concernUsers.size() == 0 && noconcernUsers.size() == 0) {
+        if((concernUsers == null && noconcernUsers == null) || (concernUsers != null && concernUsers.size() == 0 && noconcernUsers != null && noconcernUsers.size() == 0)) {
             defaultText.setVisibility(View.VISIBLE);
             concernRecyclerView.setVisibility(View.GONE);
             noconcernRecyclerView.setVisibility(View.GONE);
