@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <group android:checkableBehavior="single" >
     <item
-        android:id="@+id/nav_friends"
+        android:id="@+id/concern_user"
+        android:icon="@drawable/nav_person"
+        android:title="我的关注"/>
+    <item
+        android:id="@+id/fans"
         android:icon="@drawable/nav_friends"
-        android:title="Friends"/>
+        android:title="我的粉丝"/>
     <item
-        android:id="@+id/nav_circle"
-        android:icon="@drawable/nav_circle"
-        android:title="Circle"/>
-    <item
-        android:id="@+id/nav_play"
-        android:icon="@drawable/nav_play"
-        android:title="Play"/>
+        android:id="@+id/findFriends"
+        android:icon="@drawable/search"
+        android:title="查找用户"/>
 </group>
 </menu>

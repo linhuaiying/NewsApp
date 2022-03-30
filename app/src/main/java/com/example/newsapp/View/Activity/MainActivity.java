@@ -32,7 +32,9 @@ import com.example.newsapp.R;
 import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.View.MainView.MyViews.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
+import com.example.newsapp.View.MyConcernUserView.MyConcernUserActivity;
 import com.example.newsapp.View.PublishView.PublishActivity;
+import com.example.newsapp.View.SearchUserView.SearchUserActivity;
 import com.example.newsapp.View.SearchView.SearchActivity;
 import com.example.newsapp.View.UserView.LoginActivity;
 import com.example.newsapp.adapter.MainFragmentAdapter;
@@ -139,11 +141,23 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.person);
         }
-        navigationView.setCheckedItem(R.id.nav_friends);
+        navigationView.setCheckedItem(R.id.concern_user);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
+                switch (menuItem.getItemId()){
+                    case R.id.concern_user:
+                        mDrawerLayout.closeDrawers();
+                        MyConcernUserActivity.actionStart(MainActivity.this);
+                        break;
+                    case R.id.fans:
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.findFriends:
+                        mDrawerLayout.closeDrawers();
+                        SearchUserActivity.actionStart(MainActivity.this);
+                        break;
+                }
                 return true;
             }
 

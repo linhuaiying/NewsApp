@@ -3,6 +3,9 @@ package com.example.newsapp.Service;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.example.newsapp.bean.Userbean.UserResponse;
 
+import java.util.List;
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -30,4 +33,16 @@ public interface UserService {
     @POST("user/get") //必须用post请求
     @FormUrlEncoded
     Call<MyUser> getUser(@Field("username") String username);
+
+    @POST("user/getUsers") //必须用post请求
+    @FormUrlEncoded
+    Call<Map<String, List<MyUser>>> getUserList(@Field("userName") String userName, @Field("keyWords") String keyWords);
+
+    @POST("user/concern") //必须用post请求
+    @FormUrlEncoded
+    Call<ResponseBody> concernUser(@Field("username") String userName, @Field("concernUsername") String concernUsername);
+
+    @POST("user/getConcernUser") //必须用post请求
+    @FormUrlEncoded
+    Call<List<MyUser>> getConcernUser(@Field("username") String userName);
 }
