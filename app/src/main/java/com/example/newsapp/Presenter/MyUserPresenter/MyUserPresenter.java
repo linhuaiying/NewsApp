@@ -4,9 +4,11 @@ import com.example.newsapp.Model.MyUserModels.MyUserModel;
 import com.example.newsapp.Presenter.BasePresenter;
 import com.example.newsapp.View.MainView.MyViews.IMyView;
 import com.example.newsapp.View.MyConcernUserView.IMyConcernUserView;
+import com.example.newsapp.View.MyFansView.IMyFansView;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 
 import java.util.List;
+import java.util.Map;
 
 public class MyUserPresenter <T extends IMyView> extends BasePresenter {
     MyUserModel myUserModel;
@@ -43,6 +45,23 @@ public class MyUserPresenter <T extends IMyView> extends BasePresenter {
 
                }
            });
+        }
+    }
+
+    public void getMyFans(String userName) throws InterruptedException {
+        myUserModel = new MyUserModel(userName);
+        if(iView.get() != null && myUserModel != null) {
+            myUserModel.loadMyFans(new MyUserModel.OnLoadFansListener() {
+                @Override
+                public void onComplete(Map<String, List<MyUser>> map) {
+                    ((IMyFansView)iView.get()).showFansList(map); //从model层获取数据，给view传递用户信息
+                }
+
+                @Override
+                public void onError(String msg) {
+
+                }
+            });
         }
     }
 }

@@ -22,7 +22,10 @@ import com.example.newsapp.View.EditInfoView.EditiInfoActivity;
 import com.example.newsapp.View.MainView.BaseFragment;
 import com.example.newsapp.View.MainView.MyFavNews.MyFavNewsFragment;
 import com.example.newsapp.View.MainView.MyNews.MyNewsFragment;
+import com.example.newsapp.View.MyConcernUserView.MyConcernUserActivity;
+import com.example.newsapp.View.MyFansView.MyFansActivity;
 import com.example.newsapp.adapter.FrgAdapter;
+import com.example.newsapp.adapter.MyConcernUserAdapter;
 import com.example.newsapp.bean.MyUserbean.MyUser;
 import com.google.android.material.tabs.TabLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -56,6 +59,8 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
     TextView close;
     CircleImageView circleImageView;
     CircleImageView circleImageView2;
+    TextView concernText;
+    TextView fansText;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -71,6 +76,8 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
         moreInfoText = view.findViewById(R.id.moreInfo);
         circleImageView = view.findViewById(R.id.user_icon);
         circleImageView2 = view.findViewById(R.id.user_icon_2);
+        concernText = view.findViewById(R.id.concern_count);
+        fansText = view.findViewById(R.id.fans_count);
 
         nickName = SaveAccount.getUserInfo(container.getContext()).get("nickName");
         sex = SaveAccount.getUserInfo(container.getContext()).get("sex");
@@ -119,6 +126,18 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
             }
         });
+        concernText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyConcernUserActivity.actionStart(getActivity());
+            }
+        });
+        fansText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyFansActivity.actionStart(getActivity());
+            }
+        });
         return view;
     }
 
@@ -139,6 +158,10 @@ public class MyFragment extends BaseFragment<MyUserPresenter, IMyView> implement
             Glide.with(getActivity()).load(userIcon).into(circleImageView);
             Glide.with(getActivity()).load(userIcon).into(circleImageView2);
         }
+        List<MyUser> concernUsers = SaveAccount.getConcernUsers(getActivity());
+        List<MyUser> fans = SaveAccount.getFans(getActivity());
+        if(concernUsers != null) concernText.setText(String.valueOf(concernUsers.size()));
+        if(fans != null) fansText.setText(String.valueOf(fans.size()));
     }
 
     public void attachTab(View view) {

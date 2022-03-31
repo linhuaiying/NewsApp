@@ -33,6 +33,7 @@ import com.example.newsapp.View.MainView.UsersNews.UsersNewsFragment;
 import com.example.newsapp.View.MainView.MyViews.MyFragment;
 import com.example.newsapp.View.MainView.HomeNewsFragment;
 import com.example.newsapp.View.MyConcernUserView.MyConcernUserActivity;
+import com.example.newsapp.View.MyFansView.MyFansActivity;
 import com.example.newsapp.View.PublishView.PublishActivity;
 import com.example.newsapp.View.SearchUserView.SearchUserActivity;
 import com.example.newsapp.View.SearchView.SearchActivity;
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SaveAccount.deleteUserInfo(MainActivity.this);
                 LoginActivity.actionStart(MainActivity.this);
+                MainActivity.this.finish();
             }
         });
         ActionBar actionBar = getSupportActionBar();
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         MyConcernUserActivity.actionStart(MainActivity.this);
                         break;
                     case R.id.fans:
+                        MyFansActivity.actionStart(MainActivity.this);
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.findFriends:

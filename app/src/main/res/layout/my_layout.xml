@@ -64,12 +64,14 @@
                 android:textSize="14sp"
                 android:gravity="center"/>
             <TextView
+                android:id="@+id/fans_count"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="14sp"
                 android:gravity="center"/>
             <TextView
+                android:id="@+id/concern_count"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:text="0"

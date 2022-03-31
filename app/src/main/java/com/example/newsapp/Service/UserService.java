@@ -42,7 +42,15 @@ public interface UserService {
     @FormUrlEncoded
     Call<ResponseBody> concernUser(@Field("username") String userName, @Field("concernUsername") String concernUsername);
 
+    @POST("user/noconcern") //必须用post请求
+    @FormUrlEncoded
+    Call<ResponseBody> noconcernUser(@Field("username") String userName, @Field("concernUsername") String concernUsername);
+
     @POST("user/getConcernUser") //必须用post请求
     @FormUrlEncoded
     Call<List<MyUser>> getConcernUser(@Field("username") String userName);
+
+    @POST("user/getMyFans") //必须用post请求
+    @FormUrlEncoded
+    Call<Map<String, List<MyUser>>> getMyFans(@Field("username") String userName);
 }

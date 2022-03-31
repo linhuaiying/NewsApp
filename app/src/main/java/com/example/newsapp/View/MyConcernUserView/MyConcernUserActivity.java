@@ -67,6 +67,7 @@ public class MyConcernUserActivity extends BaseActivity<MyUserPresenter, IMyConc
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(myConcernUserAdapter);
             recyclerView.setVisibility(View.VISIBLE);
+            SaveAccount.saveConcernUsers(this, myUserList);
         }
         else {
             defaultText.setVisibility(View.VISIBLE);

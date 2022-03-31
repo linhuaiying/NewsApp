@@ -31,7 +31,6 @@ public class NewsContentActivity extends BaseActivity<NewsContentPresenter, INew
     public void init() {
         webView = findViewById(R.id.newscontent);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setTextSize(WebSettings.TextSize.LARGER);
         webView.setWebViewClient(new WebViewClient());
         uniquekey = getIntent().getStringExtra("uniquekey");
     }

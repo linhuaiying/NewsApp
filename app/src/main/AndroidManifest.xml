@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MyConcernUserView.MyConcernUserActivity"></activity>
+        <activity android:name=".View.MyFansView.MyFansActivity"></activity>
+        <activity android:name=".View.MyConcernUserView.MyConcernUserActivity" />
         <activity android:name=".View.SearchUserView.SearchUserActivity" />
         <activity android:name=".View.SearchView.SearchActivity" />
         <activity android:name=".View.HisView.HisActivity" />

@@ -18,6 +18,15 @@
             android:layout_height="200dp"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
+            <Button
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/back"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                />
         </LinearLayout>
 
         <RelativeLayout
@@ -26,57 +35,17 @@
             android:layout_marginBottom="0dp"
             android:background="@drawable/shape_card"
             android:layout_marginTop="100dp">
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:rowCount="2"
-                android:orientation="horizontal"
+            <Button
+                android:id="@+id/concern_btn"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="关注"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/gray"
+                android:stateListAnimator="@null"
                 android:layout_alignParentRight="true"
-                android:id="@+id/GridLayout"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp">
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="获赞"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorGray"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="粉丝"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorGray"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="关注"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorGray"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="14sp"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="14sp"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="14sp"
-                    android:gravity="center"/>
-            </GridLayout>
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"/>
             <TextView
                 android:id="@+id/nick_name"
                 android:layout_width="wrap_content"

@@ -23,6 +23,7 @@ import com.example.newsapp.bean.MyUserbean.MyUser;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,6 +51,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
     @Override
     public SearchUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_user_item_layout, parent, false);
+        List<MyUser> concernUsers = SaveAccount.getConcernUsers(context) == null ? new ArrayList<>() : SaveAccount.getConcernUsers(context);
         SearchUserViewHolder searchUserViewHolder = new SearchUserViewHolder(view);
         searchUserViewHolder.searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +68,35 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
                         .addConverterFactory(GsonConverterFactory.create()) //添加转换器build();
                         .build();
                 UserService userService = retrofit.create(UserService.class);
-                Call<ResponseBody> call = userService.concernUser(SaveAccount.getUserInfo(context).get("userName"), myUserList.get(position).getUserName());
+                Call<ResponseBody> call;
+                if(searchUserViewHolder.concernBtn.getText().toString().equals("关注")) {
+                    call = userService.concernUser(SaveAccount.getUserInfo(context).get("userName"), myUserList.get(position).getUserName());
+                } else {
+                    call = userService.noconcernUser(SaveAccount.getUserInfo(context).get("userName"), myUserList.get(position).getUserName());
+                }
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
                             if(response.body().string().equals("success")) {
-                                MyToast.toast("关注成功！");
-                                searchUserViewHolder.concernBtn.setText("已关注");
+                                if(searchUserViewHolder.concernBtn.getText().toString().equals("关注")) {
+                                    MyToast.toast("关注成功！");
+                                    searchUserViewHolder.concernBtn.setText("取消关注");
+                                    MyUser myUser = new MyUser();
+                                    myUser.setUserName(myUserList.get(position).getUserName());
+                                    concernUsers.add(myUser);
+                                    SaveAccount.saveConcernUsers(context, concernUsers);
+                                } else {
+                                    MyToast.toast("取消关注成功！");
+                                    searchUserViewHolder.concernBtn.setText("关注");
+                                    for(int i = 0; i < concernUsers.size(); i++) {
+                                        if(concernUsers.get(i).getUserName().equals(myUserList.get(position).getUserName())) {
+                                            concernUsers.remove(i);
+                                            SaveAccount.saveConcernUsers(context, concernUsers);
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                             else MyToast.toast("关注失败！");
                         } catch (IOException e) {
