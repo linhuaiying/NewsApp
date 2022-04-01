@@ -35,7 +35,7 @@
             android:layout_marginTop="20dp"/>
     </RelativeLayout>
     <TextView
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/title"

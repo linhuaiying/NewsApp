@@ -31,6 +31,7 @@ public class UsersNewsFragment extends BaseFragment<UsersNewsPresenter, IUsersNe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.users_news_layout, container, false);
         recyclerView = view.findViewById(R.id.usersnewsList);
+        recyclerView.setItemViewCacheSize(30);
         defaultText = view.findViewById(R.id.default_text);
         try {
             presenter.fetch();
