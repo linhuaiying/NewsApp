@@ -53,6 +53,24 @@ public class SaveAccount {
         editor.commit();
         return  true;
     }
+    public static boolean saveTitles(Context context, List<String> titles)
+    {
+        SharedPreferences sp=context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(titles);
+        editor.putString("titles", json);
+        editor.commit();
+        return  true;
+    }
+    public static boolean saveIsFirstStart(Context context, boolean isFirstStart)
+    {
+        SharedPreferences sp=context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putBoolean("isFirstStart", isFirstStart);
+        editor.commit();
+        return  true;
+    }
     public static Map<String,String> getUserInfo(Context context)
     {
         SharedPreferences sp = context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
@@ -71,6 +89,12 @@ public class SaveAccount {
         userMap.put("userIcon", userIcon);
         return userMap;
     }
+    public static boolean isFistStart(Context context)
+    {
+        SharedPreferences sp = context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
+        Boolean isFirstStart = sp.getBoolean("isFirstStart", true);
+        return isFirstStart;
+    }
     public static List<MyUser> getConcernUsers(Context context)
     {
         SharedPreferences sp = context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
@@ -86,6 +110,14 @@ public class SaveAccount {
         Gson gson = new Gson();
         List<MyUser> myUserList = gson.fromJson(fans, new TypeToken<List<MyUser>>(){}.getType());
         return myUserList;
+    }
+    public static List<String> getTitles(Context context)
+    {
+        SharedPreferences sp = context.getSharedPreferences("user_data",Context.MODE_PRIVATE);
+        String json = sp.getString("titles",null);
+        Gson gson = new Gson();
+        List<String> titles = gson.fromJson(json, new TypeToken<List<String>>(){}.getType());
+        return titles;
     }
      public static void deleteUserInfo(Context context) {
          SharedPreferences sp=context.getSharedPreferences("user_data",Context.MODE_PRIVATE);

@@ -1,5 +1,7 @@
 package com.example.newsapp.View.MainView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +13,17 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.newsapp.LocalUtils.SaveAccount;
 import com.example.newsapp.R;
+import com.example.newsapp.Toast.MyToast;
+import com.example.newsapp.View.MainView.JuHeNews.EntertainmentNewsFragment;
 import com.example.newsapp.View.MainView.JuHeNews.FinanceNewsFragment;
 import com.example.newsapp.View.MainView.JuHeNews.GameNewsFragment;
+import com.example.newsapp.View.MainView.JuHeNews.HealthyNewsFragment;
 import com.example.newsapp.View.MainView.JuHeNews.TopNewsFragment;
 import com.example.newsapp.adapter.FrgAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +32,24 @@ public class HomeNewsFragment extends Fragment {
     List<BaseFragment> fragments= new ArrayList<>();
     TabLayout tabLayout;
     ViewPager vp;
-    String[] titles = new String[]{"推荐", "财经", "游戏"};
+    List<String> titles = new ArrayList<String>();
     SwipeRefreshLayout swipeRefreshLayout;
+    AlertDialog alertDialog;
+    Boolean isFirstStart;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.home_news_layout, container, false);
-        attachTab(view);
+        titles.add("推荐");
+        isFirstStart = SaveAccount.isFistStart(getActivity());
+        if(isFirstStart) {
+            showMutilAlertDialog(view);
+        } else {
+            //取缓存中的titles
+            titles = SaveAccount.getTitles(getActivity());
+            attachTab(view);
+        }
         swipeRefreshLayout = view.findViewById(R.id.news_fresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -65,22 +82,22 @@ public class HomeNewsFragment extends Fragment {
     }
 
     public void attachTab(View view) {
-        //构造适配器
         fragments.add(new TopNewsFragment());
-        fragments.add(new FinanceNewsFragment());
-        fragments.add(new GameNewsFragment());
+        tabLayout = view.findViewById(R.id.tablayout);
+        for(int i=0;i<titles.size();i++){
+            tabLayout.addTab(tabLayout.newTab());
+            tabLayout.getTabAt(i).setText(titles.get(i));
+            //构造适配器
+            if(titles.get(i).equals("财经")) fragments.add(new FinanceNewsFragment());
+            if(titles.get(i).equals("游戏")) fragments.add(new GameNewsFragment());
+            if(titles.get(i).equals("娱乐")) fragments.add(new EntertainmentNewsFragment());
+            if(titles.get(i).equals("健康")) fragments.add(new HealthyNewsFragment());
+        }
         FrgAdapter adapter = new FrgAdapter(getActivity().getSupportFragmentManager(), fragments);
-
         //设定适配器
         vp = view.findViewById(R.id.viewpaper);
         vp.setAdapter(adapter);
         vp.setOffscreenPageLimit(fragments.size()); //设置缓存的fragment的大小，不用一切换就销毁fragment
-
-        tabLayout = view.findViewById(R.id.tablayout);
-        for(int i=0;i<titles.length;i++){
-            tabLayout.addTab(tabLayout.newTab());
-            tabLayout.getTabAt(i).setText(titles[i]);
-        }
         //ViewPager点击事件
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -120,6 +137,38 @@ public class HomeNewsFragment extends Fragment {
         });
     }
 
-
-
+    public void showMutilAlertDialog(View view){
+        final String[] items = {"财经", "游戏", "娱乐", "健康"};
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle("选择你感兴趣的新闻类别");
+        /**
+         *第一个参数:弹出框的消息集合，一般为字符串集合
+         * 第二个参数：默认被选中的，布尔类数组
+         * 第三个参数：勾选事件监听
+         */
+        alertBuilder.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean isChecked) {
+                if (isChecked){
+                    MyToast.toast("选择");
+                    titles.add(items[i]);
+                }else {
+                    MyToast.toast("取消选择");
+                    titles.remove(items[i]);
+                }
+            }
+        });
+        alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alertDialog.dismiss();
+                //存下来
+                SaveAccount.saveTitles(getActivity(), titles);
+                SaveAccount.saveIsFirstStart(getActivity(), false);
+                attachTab(view);
+            }
+        });
+        alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
 }
