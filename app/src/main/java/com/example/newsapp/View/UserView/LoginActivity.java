@@ -2,6 +2,7 @@ package com.example.newsapp.View.UserView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -23,12 +24,13 @@ import com.example.newsapp.bean.Userbean.User;
 
 import java.util.Map;
 
+import site.gemus.openingstartanimation.OpeningStartAnimation;
+
 
 public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> implements View.OnClickListener, IUserView {
 
     String phone;
     String password;
-    Map<String,String> userInfo;
 
     // 手机号输入框
     private EditText inputPhoneEt;
@@ -48,24 +50,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(isLogined()) {
-            User user = new User();
-            user.setUsername(phone);
-            user.setPassword(password);
-            MainActivity.actionStart(this, user, 0);
-            this.finish();
-        }
         init();
-    }
-
-    public boolean isLogined() {
-        userInfo= SaveAccount.getUserInfo(this);
-        phone = userInfo.get("userName");
-        password = userInfo.get("password");
-        if(phone != null && password != null) {
-           return true;
-        }
-        return false;
     }
 
     @Override
@@ -179,7 +164,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
 
         if(user != null) {    //跳转到主页
             //保存用户信息到本地
-            if(!isLogined()) SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
+            SaveAccount.saveUserInfo(this, user.getUsername(), user.getPassword());
             createProgressBar();
             MainActivity.actionStart(this, user, 0);
             this.finish();

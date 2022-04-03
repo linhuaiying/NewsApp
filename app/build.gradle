@@ -64,4 +64,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'site.gemus:openingstartanimation:1.0.0'
+
 }

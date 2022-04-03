@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import site.gemus.openingstartanimation.OpeningStartAnimation;
 
 public class MainActivity extends AppCompatActivity {
 

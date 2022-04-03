@@ -23,7 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MyFansView.MyFansActivity"></activity>
+        <activity android:name=".View.Activity.LaucherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".View.MyFansView.MyFansActivity" />
         <activity android:name=".View.MyConcernUserView.MyConcernUserActivity" />
         <activity android:name=".View.SearchUserView.SearchUserActivity" />
         <activity android:name=".View.SearchView.SearchActivity" />
@@ -33,11 +40,7 @@
         <activity android:name=".View.PublishView.PublishActivity" />
         <activity android:name=".View.NewsContentView.NewsContentActivity" />
         <activity android:name=".View.UserView.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".View.Activity.MainActivity" />
         <activity android:name=".View.UserView.RegisterActivity" />
