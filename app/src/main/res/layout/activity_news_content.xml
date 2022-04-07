@@ -1,17 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="0dp"
+    sothree:umanoShadowHeight="4dp"
     tools:context=".View.NewsContentView.NewsContentActivity">
-
-    <WebView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        >
+        <Button
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back"
+            />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="标题"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:gravity="center"/>
+    </LinearLayout>
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/newscontent">
 
     </WebView>
+    <TextView
+        android:id="@+id/allComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:text="查看全部评论 >"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="#fff">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#F5F5F5"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittext"
+                android:text="写下你的评论..."
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/happy"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"/>
+        </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/fav"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/cancel_fav"
+            android:layout_marginLeft="50dp"
+            />
+        <Button
+            android:id="@+id/like"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/unlike"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="全部评论"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x"
+                android:textSize="18sp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/default_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无评论"
+                android:textSize="18sp"
+                android:layout_gravity="center"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/recyclerView"/>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/comment"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:hint="评论千万条，友善第一条"
+                android:backgroundTint="@android:color/transparent"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发布"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginRight="10dp"
+                android:id="@+id/publish"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

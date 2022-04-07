@@ -209,8 +209,14 @@ public class showPublishContentActivity extends BaseActivity<ShowPublishContentP
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isLike) likeBtn.setBackgroundResource(R.drawable.like);
-                else likeBtn.setBackgroundResource(R.drawable.unlike);
+                if(!isLike) {
+                    likeBtn.setBackgroundResource(R.drawable.like);
+                    isLike = true;
+                }
+                else {
+                    likeBtn.setBackgroundResource(R.drawable.unlike);
+                    isLike = false;
+                }
             }
         });
     }

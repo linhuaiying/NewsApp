@@ -34,7 +34,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             public void onClick(View view) {
                 int position = newsViewHolder.getAdapterPosition();
                 String uniquekey = newsList.get(position).getUniquekey();
-                NewsContentActivity.actionStart(parent.getContext(), uniquekey);
+                String title = newsList.get(position).getTitle();
+                NewsContentActivity.actionStart(parent.getContext(), uniquekey, title);
             }
         });
         return newsViewHolder;
