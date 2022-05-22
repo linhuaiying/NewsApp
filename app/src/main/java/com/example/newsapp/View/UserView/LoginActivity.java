@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, IUserView> imple
         }
         if(view.getId() == R.id.register) {
             RegisterActivity.actionStart(this); //打开注册面板
-            this.finish();
+           // this.finish();
         }
     }
 

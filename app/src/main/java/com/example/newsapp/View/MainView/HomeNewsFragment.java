@@ -150,10 +150,8 @@ public class HomeNewsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean isChecked) {
                 if (isChecked){
-                    MyToast.toast("选择");
                     titles.add(items[i]);
                 }else {
-                    MyToast.toast("取消选择");
                     titles.remove(items[i]);
                 }
             }
